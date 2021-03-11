@@ -27,6 +27,16 @@
     padding-left: -300px;
     margin-left: 100px;
   }
-  .route-link {
-    margin-left: -300px;
+  .fundoo-image{
+      padding-top: 100px;
   }
+  .route-link {
+    margin-left: -400px;
+  }
+ 
+  *{
+    -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+    display: none;
+}

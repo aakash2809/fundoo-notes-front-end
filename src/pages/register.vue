@@ -1,5 +1,5 @@
 <template>
-  <div class="scrollbar-hidden">
+  <div>
     <form novalidate class="md-layout jc-center" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-50 md-small-size-100 overflow-x">
         <div class="md-layout md-gutter">
@@ -15,9 +15,9 @@
 
             <md-card-content>
               <div class="md-layout md-gutter">
-                <div class="md-layout-item md-small-size-100">
+                <div class="md-layout-item md-size-50 md-small-size-100">
                   <md-field :class="getValidationClass('firstName')">
-                    <label for="last-name">Last Name</label>
+                    <label for="last-name">First Name</label>
                     <md-input
                       id="first-name"
                       v-model="form.firstName"
@@ -36,7 +36,7 @@
                   </md-field>
                 </div>
 
-                <div class="md-layout-item md-small-size-100">
+                <div class="md-layout-item md-size-50 md-small-size-100">
                   <md-field :class="getValidationClass('lastName')">
                     <label for="last-name">Last Name</label>
                     <md-input
@@ -61,7 +61,7 @@
               </div>
 
               <md-field :class="getValidationClass('email')">
-                <label for="email">email</label>
+                <label for="email">Email</label>
                 <md-input
                   outline
                   dense
@@ -81,9 +81,9 @@
               </md-field>
 
               <div class="md-layout md-gutter">
-                <div class="md-layout-item md-small-size-100">
+                <div class="md-layout-item md-size-50 md-small-size-100">
                   <md-field :class="getValidationClass('password')">
-                    <label for="password">Password</label>
+                    <label for="password"> Password</label>
                     <md-input
                       name="password"
                       type="password"
@@ -102,7 +102,7 @@
                   </md-field>
                 </div>
 
-                <div class="md-layout-item md-small-size-100">
+                <div class="md-layout-item md-size-50 md-small-size-100">
                   <md-field :class="getValidationClass('password')">
                     <label for="cpassword">Confirm Password</label>
                     <md-input
@@ -145,7 +145,7 @@
             </md-card-content>
           </div>
 
-          <div class="md-layout-item md-small-size-100">
+          <div class="md-layout-item md-size-40 md-small-size-100 fundoo-image">
             <figure class="account-img">
               <img
                 src="https://ssl.gstatic.com/accounts/signup/glif/account.svg"
@@ -169,13 +169,11 @@
   </div>
 </template>
 
-
-
 <script>
 import { validationMixin } from "vuelidate";
 import router from "../router";
 import { required, email } from "vuelidate/lib/validators";
-import Title from "../components/title";
+import Title from "../components/fundooTitle";
 import axios from "axios";
 
 export default {
@@ -257,15 +255,15 @@ export default {
   },
 
   register() {
-    axios.post("https://api.coindesk.com/v1/bpi/currentprice.json");
+    axios.post("register");
   },
-  mounted() {},
+
   components: {
     Title,
   },
 };
 </script>
 
-<style  scoped>
+<style scoped>
 @import url("../scss/register.scss");
 </style>
