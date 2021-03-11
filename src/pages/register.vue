@@ -1,16 +1,14 @@
 <template>
   <div>
     <form novalidate class="md-layout jc-center" @submit.prevent="validateUser">
-      <md-card class="md-layout-item md-size-50 md-small-size-100 overflow-x">
+      <md-card class="md-layout-item md-size-50 md-small-size-100">
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
             <md-card-header>
               <div class="md-title" v-bind:style="styleObject">
                 <Title />
-                <br />
-                <br />
-                Create Fundoo Account
               </div>
+              <div class="md-title">Create Fundoo Account</div>
             </md-card-header>
 
             <md-card-content>
@@ -238,24 +236,29 @@ export default {
     saveUser() {
       this.sending = true;
       let data = {
-        firstName: this.form.firstName,
+        name: this.form.firstName,
         lastName: this.form.lastName,
         email: this.form.email,
         password: this.form.password,
+        confirmPassword: this.form.cpassword,
       };
-
       console.log("signup details: ", data);
+      axios
+        .post("http://localhost:3000/register", data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
+
     validateUser() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.saveUser();
       }
     },
-  },
-
-  register() {
-    axios.post("register");
   },
 
   components: {
