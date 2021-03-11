@@ -4,14 +4,13 @@ import Router from 'vue-router'
 import SignUp from '@/pages/register';
 import Login from '@/pages/login';
 
-Vue.use(Router)
+
 
 export default new Router({
     routes: [
 
         {
             path: '/register',
-            name: 'Register',
             component: SignUp
         },
         {
@@ -22,3 +21,5 @@ export default new Router({
     ],
     mode: 'history'
 })
+
+Vue.use(Router)

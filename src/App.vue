@@ -1,10 +1,8 @@
 <template>
   <div id="app">
-    <!--    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <!-- <router-view /> -->
-
-    <register />
+    <router-view />
+    <!-- <register />
+    <login /> -->
   </div>
 </template>
 
@@ -18,12 +16,11 @@ export default {
   }
 } */
 
-import register from "./pages/register";
+/* import register from "./pages/register";
+import login from "./pages/register"; */
 export default {
   name: "App",
-  components: {
-    register,
-  },
+  components: {},
 };
 </script>
 
