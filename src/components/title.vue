@@ -21,7 +21,7 @@ export default {};
 <style scoped>
 v-card-title {
   font-size: 25px;
-  /* margin-left: -700px;
+  /*   margin-left: -750px;
   padding-left: 80px; */
 }
 .md-title-col1 {

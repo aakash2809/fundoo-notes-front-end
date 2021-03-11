@@ -3,7 +3,8 @@
     <!--    <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" /> -->
     <!-- <router-view /> -->
-    <SignUp />
+
+    <register />
   </div>
 </template>
 
@@ -17,16 +18,16 @@ export default {
   }
 } */
 
-import SignUp from "./components/SignUp";
+import register from "./pages/register";
 export default {
   name: "App",
   components: {
-    SignUp,
+    register,
   },
 };
 </script>
 
-<style>
+<style lang ="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
