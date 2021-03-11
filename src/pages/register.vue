@@ -266,37 +266,6 @@ export default {
 };
 </script>
 
-<style>
-.md-progress-bar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-}
-
-.jc-center {
-  justify-content: center;
-}
-
-.overflow-x {
-  overflow-x: hidden;
-}
-.overflow-y {
-  overflow-x: hidden;
-}
-
-.md-primary {
-  background-color: blue;
-}
-
-.scrollbar-hidden:-webkit-scrollbar {
-  display: none;
-}
-.fundoo-title {
-  padding-left: -300px;
-  margin-left: 100px;
-}
-.route-link {
-  margin-left: -300px;
-}
+<style  scoped>
+@import url("../scss/register.scss");
 </style>
