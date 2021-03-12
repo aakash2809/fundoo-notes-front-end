@@ -172,7 +172,8 @@ import { validationMixin } from "vuelidate";
 import router from "../router";
 import { required, email } from "vuelidate/lib/validators";
 import Title from "../components/fundooTitle";
-import axios from "axios";
+import userServices from "../services/user";
+//import axios from "axios";
 
 export default {
   name: "SignUp",
@@ -219,6 +220,7 @@ export default {
         };
       }
     },
+
     clearForm() {
       this.$v.$reset();
       this.form.firstName = null;
@@ -227,12 +229,11 @@ export default {
       this.form.phone = null;
       this.form.password = null;
       this.form.cpassword = null;
-      window.setTimeout(() => {
-        router.push({
-          name: "home",
-        });
-      }, 2000);
+      router.push({
+        name: "home",
+      });
     },
+
     saveUser() {
       this.sending = true;
       let data = {
@@ -243,12 +244,14 @@ export default {
         confirmPassword: this.form.cpassword,
       };
       console.log("signup details: ", data);
-      axios
-        .post("http://localhost:3000/register", data)
+      userServices
+        .registerUser(data)
         .then((res) => {
-          console.log(res);
+          console.log("resiponse", res);
+          alert("registered sucessfully");
         })
         .catch((error) => {
+          alert("internal server error");
           console.log(error);
         });
     },
