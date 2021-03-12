@@ -18,43 +18,6 @@
 export default {};
 </script>
 
-<style scoped>
-v-card-title {
-  font-size: 25px;
-  /*   margin-left: -750px;
-  padding-left: 80px; */
-}
-.md-title-col1 {
-  color: blue;
-}
-.md-title-col2 {
-  color: brown;
-}
-.md-title-col3 {
-  color: orange;
-}
-.md-title-col4 {
-  color: purple;
-}
-.md-title-col5 {
-  color: green;
-}
-.md-title-col6 {
-  color: lightcoral;
-}
-.md-title-col7 {
-  color: blue;
-}
-.md-title-col8 {
-  color: maroon;
-}
-.md-title-col9 {
-  color: lightskyblue;
-}
-.md-title-col10 {
-  color: red;
-}
-.md-title-col11 {
-  color: green;
-}
+<style lang = "scss" scoped>
+@import url("../scss/fundooTitle.scss");
 </style>
