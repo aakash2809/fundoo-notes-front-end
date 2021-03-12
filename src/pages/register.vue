@@ -1,6 +1,11 @@
 <template>
   <div>
-    <form novalidate class="md-layout jc-center" @submit.prevent="validateUser">
+    <form
+      novalidate
+      class="md-layout jc-center"
+      @submit.prevent="validateUser"
+      autocomplete="off"
+    >
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
@@ -20,6 +25,7 @@
                       id="first-name"
                       v-model="form.firstName"
                       label="First name"
+                      autocomplete="off"
                       :disabled="sending"
                     />
 
@@ -40,7 +46,6 @@
                     <md-input
                       name="last-name"
                       id="last-name"
-                      autocomplete="family-name"
                       v-model="form.lastName"
                       outline
                       dense
@@ -66,7 +71,6 @@
                   type="email"
                   name="email"
                   id="email"
-                  autocomplete="email"
                   v-model="form.email"
                   :disabled="sending"
                 />
@@ -95,7 +99,7 @@
                     <span
                       class="md-error"
                       v-else-if="!$v.form.password.minlength"
-                      >Password should contain minimum 4 charecters
+                      >Password should contain minimum 8 charecters
                     </span>
                   </md-field>
                 </div>
@@ -116,14 +120,12 @@
                     <span
                       class="md-error"
                       v-else-if="!$v.form.cpassword.minlength"
-                      >Confirm Password should contain minimum 4 charecters
+                      >Confirm Password should contain minimum 8 charecters
                     </span>
                   </md-field>
                 </div>
               </div>
             </md-card-content>
-            <md-progress-bar md-mode="indeterminate" v-if="sending" />
-
             <md-card-content>
               <md-card-actions>
                 <span>
@@ -170,10 +172,9 @@
 <script>
 import { validationMixin } from "vuelidate";
 import router from "../router";
-import { required, email } from "vuelidate/lib/validators";
+import { required, email, minLength } from "vuelidate/lib/validators";
 import Title from "../components/fundooTitle";
 import userServices from "../services/user";
-//import axios from "axios";
 
 export default {
   name: "SignUp",
@@ -194,20 +195,43 @@ export default {
     form: {
       firstName: {
         required,
+        minLength: minLength(3),
+        isUnique(value) {
+          if (typeof value === "undefined" || value === null || value === "") {
+            return true;
+          }
+          return /^[A-Z]{1}[a-zA-Z ]{2,}$/.test(value);
+        },
       },
       lastName: {
         required,
+        minLength: minLength(3),
+        isUnique(value) {
+          if (typeof value === "undefined" || value === null || value === "") {
+            return true;
+          }
+          return /^[A-Z]{1}[a-zA-Z ]{2,}$/.test(value);
+        },
       },
       email: {
         required,
         email,
       },
-
       password: {
         required,
+        minLength: minLength(4),
+        isUnique(value) {
+          if (typeof value === "undefined" || value === null || value === "") {
+            return true;
+          }
+          return /^(?=.*[0-9])(?=.*[A-Z])(?=.*[\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_])[a-zA-Z0-9\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_]{8,}$/.test(
+            value
+          );
+        },
       },
       cpassword: {
         required,
+        minLength: minLength(8),
       },
     },
   },
@@ -226,11 +250,10 @@ export default {
       this.form.firstName = null;
       this.form.lastName = null;
       this.form.email = null;
-      this.form.phone = null;
       this.form.password = null;
       this.form.cpassword = null;
       router.push({
-        name: "home",
+        name: "register",
       });
     },
 
@@ -243,12 +266,15 @@ export default {
         password: this.form.password,
         confirmPassword: this.form.cpassword,
       };
+
       console.log("signup details: ", data);
+
       userServices
         .registerUser(data)
         .then((res) => {
           console.log("resiponse", res);
-          alert("registered sucessfully");
+
+          alert(res.message);
         })
         .catch((error) => {
           alert("internal server error");
