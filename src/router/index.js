@@ -3,8 +3,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import SignUp from '@/pages/register';
 import Login from '@/pages/login';
+import ForgotPassword from '@/pages/forgotPassword';
+import ResetPassword from '@/pages/resetPassword';
 
-
+Vue.use(Router)
 
 export default new Router({
     routes: [
@@ -15,11 +17,17 @@ export default new Router({
         },
         {
             path: '/login',
-            name: 'Login',
             component: Login
+        },
+        {
+            path: '/forgotPassword',
+            component: ForgotPassword
+        },
+        {
+            path: '/resetPassword',
+            component: ResetPassword
         }
     ],
     mode: 'history'
 })
 
-Vue.use(Router)
