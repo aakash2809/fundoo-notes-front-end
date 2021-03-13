@@ -1,16 +1,15 @@
-
-
 <template>
   <div>
     <form novalidate class="md-layout jc-center" @submit.prevent="validateUser">
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
+      <md-card class="md-layout-item md-size-30 md-small-size-100">
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
             <md-card-header>
-              <div class="md-title" v-bind:style="styleObject">
+              <div class="md-title md-gutter" v-bind:style="styleObject">
                 <Title />
               </div>
-              <div class="md-title">Login Fundoo Account</div>
+              <br />
+              <div class="md-subheading">Login Fundoo Account</div>
             </md-card-header>
 
             <md-card-content>
@@ -33,7 +32,6 @@
                   >Invalid email</span
                 >
               </md-field>
-
               <div class="md-layout md-gutter">
                 <div class="md-layout-item md-size-100 md-small-size-100">
                   <md-field :class="getValidationClass('password')">
@@ -57,15 +55,20 @@
                 </div>
               </div>
             </md-card-content>
-            <md-progress-bar md-mode="indeterminate" v-if="sending" />
-
             <md-card-content>
               <md-card-actions>
                 <span>
-                  <router-link to="/register" class="route-link"
-                    >register in instead</router-link
-                  >
-                </span>
+                  <router-link to="/forgotPassword" class="route-link1"
+                    >forgot password ?</router-link
+                  ></span
+                >
+                <div>
+                  <span>
+                    <router-link to="/register" class="route-link"
+                      >register instead</router-link
+                    >
+                  </span>
+                </div>
 
                 <v-spacer> </v-spacer>
                 <md-button
@@ -164,5 +167,5 @@ export default {
 </script>
 
 <style scoped>
-@import url("../scss/register.scss");
+@import url("../scss/login.scss");
 </style>
