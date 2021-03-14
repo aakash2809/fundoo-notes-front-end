@@ -10,10 +10,11 @@
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
             <md-card-header>
-              <div class="md-title" v-bind:style="styleObject">
+              <div class="md-title">
                 <Title />
               </div>
-              <div class="md-title">Create Fundoo Account</div>
+              <br />
+              <div class="md-subheading">Create Fundoo Account</div>
             </md-card-header>
 
             <md-card-content>
@@ -129,16 +130,11 @@
             <md-card-content>
               <md-card-actions>
                 <span>
-                  <router-link to="/login" class="route-link"
+                  <router-link to="/loginUser" class="route-link"
                     >sign in instead</router-link
                   >
                 </span>
-
-                <v-spacer> </v-spacer>
-                <md-button
-                  type="submit"
-                  class="md-raised md-primary"
-                  :disabled="sending"
+                <md-button type="submit" class="md-raised md-primary"
                   >Next</md-button
                 >
               </md-card-actions>
@@ -161,10 +157,12 @@
           </div>
         </div>
       </md-card>
-
-      <md-snackbar :md-active.sync="userSaved"
-        >The user {{ lastUser }} was saved with success!</md-snackbar
-      >
+      <md-snackbar :md-active.sync="snackbar">
+        {{ snackbarText }}
+        <md-button class="md-primary" @click="snackbar = false"
+          >Close</md-button
+        >
+      </md-snackbar>
     </form>
   </div>
 </template>
@@ -187,9 +185,10 @@ export default {
       password: null,
       cpassword: null,
     },
-    userSaved: false,
+
     sending: false,
-    lastUser: null,
+    snackbar: false,
+    snackbarText: "",
   }),
   validations: {
     form: {
@@ -219,7 +218,7 @@ export default {
       },
       password: {
         required,
-        minLength: minLength(4),
+        minLength: minLength(8),
         isUnique(value) {
           if (typeof value === "undefined" || value === null || value === "") {
             return true;
@@ -273,11 +272,13 @@ export default {
         .registerUser(data)
         .then((res) => {
           console.log("resiponse", res);
-
-          alert(res.message);
+          this.snackbar = true;
+          this.snackbarText = `${res.data.message}`;
+          this.clearForm();
         })
         .catch((error) => {
-          alert("internal server error");
+          this.snackbar = true;
+          this.snackbarText = `internal server error`;
           console.log(error);
         });
     },

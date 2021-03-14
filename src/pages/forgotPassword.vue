@@ -1,5 +1,3 @@
-
-
 <template>
   <div>
     <form novalidate class="md-layout jc-center" @submit.prevent="validateUser">
@@ -7,7 +5,7 @@
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
             <md-card-header>
-              <div class="md-title" v-bind:style="styleObject">
+              <div class="md-title">
                 <Title />
               </div>
               <br />
@@ -23,7 +21,6 @@
                   type="email"
                   name="email"
                   id="email"
-                  autocomplete="email"
                   v-model="form.email"
                   :disabled="sending"
                 />
@@ -38,10 +35,7 @@
 
             <md-card-content>
               <md-card-actions>
-                <md-button
-                  type="submit"
-                  class="md-raised md-primary"
-                  :disabled="sending"
+                <md-button type="submit" class="md-raised md-primary"
                   >Next</md-button
                 >
               </md-card-actions>
@@ -49,6 +43,12 @@
           </div>
         </div>
       </md-card>
+      <md-snackbar :md-active.sync="snackbar">
+        {{ snackbarText }}
+        <md-button class="md-primary" @click="snackbar = false"
+          >Close</md-button
+        >
+      </md-snackbar>
     </form>
   </div>
 </template>
@@ -58,6 +58,7 @@ import { validationMixin } from "vuelidate";
 import router from "../router";
 import { required, email } from "vuelidate/lib/validators";
 import Title from "../components/fundooTitle";
+import userServices from "../services/user";
 
 export default {
   name: "forgetPassword",
@@ -72,22 +73,9 @@ export default {
   }),
   validations: {
     form: {
-      firstName: {
-        required,
-      },
-      lastName: {
-        required,
-      },
       email: {
         required,
         email,
-      },
-
-      password: {
-        required,
-      },
-      cpassword: {
-        required,
       },
     },
   },
@@ -105,24 +93,34 @@ export default {
     clearForm() {
       this.$v.$reset();
       this.form.email = null;
-      window.setTimeout(() => {
-        router.push({
-          name: "home",
-        });
-      }, 2000);
+
+      router.push({ path: "/forgotPassword" });
     },
-    LoginUser() {
+
+    forgotPassword() {
       this.sending = true;
       let data = {
         email: this.form.email,
       };
-      console.log("signup details: ", data);
+      userServices
+        .forgotPassword(data)
+        .then((res) => {
+          console.log("response", res.data.message);
+          this.snackbar = true;
+          this.snackbarText = `${res.data.message}`;
+          this.clearForm();
+        })
+        .catch((error) => {
+          this.snackbar = true;
+          this.snackbarText = `internal server error`;
+          console.log(error);
+        });
     },
 
     validateUser() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.saveUser();
+        this.forgotPassword();
       }
     },
   },

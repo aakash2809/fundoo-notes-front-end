@@ -5,7 +5,7 @@
         <div class="md-layout md-gutter">
           <div class="md-layout-item md-small-size-100">
             <md-card-header>
-              <div class="md-title md-gutter" v-bind:style="styleObject">
+              <div class="md-title">
                 <Title />
               </div>
               <br />
@@ -49,7 +49,7 @@
                     <span
                       class="md-error"
                       v-else-if="!$v.form.password.minlength"
-                      >Password should contain minimum 4 charecters
+                      >Password should contain minimum 8 charecters
                     </span>
                   </md-field>
                 </div>
@@ -69,12 +69,7 @@
                     >
                   </span>
                 </div>
-
-                <v-spacer> </v-spacer>
-                <md-button
-                  type="submit"
-                  class="md-raised md-primary"
-                  :disabled="sending"
+                <md-button type="submit" class="md-primary md-raised"
                   >Login</md-button
                 >
               </md-card-actions>
@@ -82,6 +77,12 @@
           </div>
         </div>
       </md-card>
+      <md-snackbar :md-active.sync="snackbar">
+        {{ snackbarText }}
+        <md-button class="md-primary" @click="snackbar = false"
+          >Close</md-button
+        >
+      </md-snackbar>
     </form>
   </div>
 </template>
@@ -89,8 +90,9 @@
 <script>
 import { validationMixin } from "vuelidate";
 import router from "../router";
-import { required, email } from "vuelidate/lib/validators";
+import { required, email, minLength } from "vuelidate/lib/validators";
 import Title from "../components/fundooTitle";
+import userServices from "../services/user";
 
 export default {
   name: "Login",
@@ -100,27 +102,27 @@ export default {
       email: null,
       password: null,
     },
-    userSaved: false,
+    snackbar: false,
+    snackbarText: "",
     sending: false,
   }),
   validations: {
     form: {
-      firstName: {
-        required,
-      },
-      lastName: {
-        required,
-      },
       email: {
         required,
         email,
       },
-
       password: {
         required,
-      },
-      cpassword: {
-        required,
+        minLength: minLength(8),
+        isUnique(value) {
+          if (typeof value === "undefined" || value === null || value === "") {
+            return true;
+          }
+          return /^(?=.*[0-9])(?=.*[A-Z])(?=.*[\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_])[a-zA-Z0-9\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_]{8,}$/.test(
+            value
+          );
+        },
       },
     },
   },
@@ -133,29 +135,40 @@ export default {
         };
       }
     },
+
     clearForm() {
       this.$v.$reset();
       this.form.email = null;
       this.form.password = null;
-      window.setTimeout(() => {
-        router.push({
-          name: "home",
-        });
-      }, 2000);
+      router.push({ path: "/loginUser" });
     },
-    LoginUser() {
+
+    login() {
       this.sending = true;
       let data = {
         email: this.form.email,
         password: this.form.password,
       };
-      console.log("signup details: ", data);
+      console.log("Login details: ", data);
+      userServices
+        .loginUser(data)
+        .then((res) => {
+          console.log("response", res.data.message);
+          this.snackbar = true;
+          this.snackbarText = `${res.data.message}`;
+          this.clearForm();
+        })
+        .catch((error) => {
+          this.snackbar = true;
+          this.snackbarText = `internal server error`;
+          console.log(error);
+        });
     },
 
     validateUser() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.saveUser();
+        this.login();
       }
     },
   },
