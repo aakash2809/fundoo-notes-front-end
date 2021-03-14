@@ -10,13 +10,13 @@ Vue.use(Router)
 
 export default new Router({
     routes: [
-
         {
             path: '/register',
             component: SignUp
         },
         {
-            path: '/login',
+            path: '/loginUser',
+            name: Login,
             component: Login
         },
         {
