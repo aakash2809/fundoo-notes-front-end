@@ -1,5 +1,3 @@
-
-
 <template>
   <div>
     <form novalidate class="md-layout jc-center" @submit.prevent="validateUser">
@@ -39,7 +37,7 @@
                     <label for="newPassword">New Password</label>
                     <md-input
                       name="newPassword"
-                      type="newPassword"
+                      type="password"
                       id="newPassword"
                       v-model="form.newPassword"
                       :disabled="sending"
@@ -60,13 +58,10 @@
               <md-card-actions>
                 <span>
                   <router-link to="/register" class="route-link"
-                    >register in instead</router-link
+                    >register instead</router-link
                   >
                 </span>
-                <md-button
-                  type="submit"
-                  class="md-raised md-primary"
-                  :disabled="sending"
+                <md-button type="submit" class="md-raised md-primary"
                   >Reset</md-button
                 >
               </md-card-actions>
@@ -74,15 +69,22 @@
           </div>
         </div>
       </md-card>
+      <md-snackbar :md-active.sync="snackbar">
+        {{ snackbarText }}
+        <md-button class="md-primary" @click="snackbar = false"
+          >Close</md-button
+        >
+      </md-snackbar>
     </form>
   </div>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate";
+import router from "../router";
 import { required, email } from "vuelidate/lib/validators";
 import Title from "../components/fundooTitle";
-
+import userServices from "../services/user";
 export default {
   name: "resetPassword",
   mixins: [validationMixin],
@@ -91,8 +93,10 @@ export default {
       email: null,
       newPassword: null,
     },
-    userSaved: false,
+    snackbar: false,
+    snackbarText: "",
     sending: false,
+    isInfinity: true,
   }),
   validations: {
     form: {
@@ -100,7 +104,6 @@ export default {
         required,
         email,
       },
-
       newPassword: {
         required,
       },
@@ -119,6 +122,7 @@ export default {
       this.$v.$reset();
       this.form.email = null;
       this.form.newPassword = null;
+      router.push({ path: "/resetPassword" });
     },
     resetPassword() {
       this.sending = true;
@@ -126,7 +130,23 @@ export default {
         email: this.form.email,
         password: this.form.newPassword,
       };
-      console.log("signup details: ", data);
+
+      console.log("reset details: ", data);
+
+      userServices
+        .resetPassword(data)
+        .then((res) => {
+          console.log(res);
+          this.snackbar = true;
+          this.snackbarText = `${res.data.message}`;
+          this.clearForm();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.snackbar = true;
+          this.snackbarText = `internal server error`;
+          this.clearForm();
+        });
     },
 
     validateUser() {
