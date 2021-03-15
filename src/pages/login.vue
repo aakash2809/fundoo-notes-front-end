@@ -23,7 +23,6 @@
                   id="email"
                   autocomplete="email"
                   v-model="form.email"
-                  :disabled="sending"
                 />
                 <span class="md-error" v-if="!$v.form.email.required"
                   >The email is required</span
@@ -41,7 +40,6 @@
                       type="password"
                       id="password"
                       v-model="form.password"
-                      :disabled="sending"
                     />
                     <span class="md-error" v-if="!$v.form.password.required"
                       >The password is required</span
@@ -136,11 +134,13 @@ export default {
       }
     },
 
-    clearForm() {
+    clearForm(redirectKey) {
       this.$v.$reset();
       this.form.email = null;
       this.form.password = null;
-      router.push({ path: "/loginUser" });
+      if (redirectKey) {
+        router.push({ path: "/dashBoard" });
+      }
     },
 
     login() {
@@ -153,14 +153,25 @@ export default {
       userServices
         .loginUser(data)
         .then((res) => {
-          console.log("response", res.data.message);
-          this.snackbar = true;
-          this.snackbarText = `${res.data.message}`;
-          this.clearForm();
+          if (res.data.sucess) {
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("firstName", res.data.user[0].name);
+            localStorage.setItem("lastName", res.data.user[0].lastName);
+            localStorage.setItem("email", res.data.user[0].email);
+
+            this.snackbar = true;
+            this.snackbarText = `${res.data.message}`;
+            this.clearForm(res.data.success);
+          } else {
+            this.snackbar = true;
+            this.snackbarText = `${res.data.message}`;
+            this.clearForm(res.data.success);
+          }
         })
         .catch((error) => {
           this.snackbar = true;
           this.snackbarText = `internal server error`;
+          this.clearForm(false);
           console.log(error);
         });
     },
