@@ -48,7 +48,7 @@
                     <span
                       class="md-error"
                       v-else-if="!$v.form.newPassword.minlength"
-                      >Password should contain minimum 4 charecters
+                      >Password should contain minimum 8 charecters
                     </span>
                   </md-field>
                 </div>
@@ -82,7 +82,7 @@
 <script>
 import { validationMixin } from "vuelidate";
 import router from "../router";
-import { required, email } from "vuelidate/lib/validators";
+import { required, email, minLength } from "vuelidate/lib/validators";
 import Title from "../components/fundooTitle";
 import userServices from "../services/user";
 export default {
@@ -106,6 +106,15 @@ export default {
       },
       newPassword: {
         required,
+        minLength: minLength(8),
+        isUnique(value) {
+          if (typeof value === "undefined" || value === null || value === "") {
+            return true;
+          }
+          return /^(?=.*[0-9])(?=.*[A-Z])(?=.*[\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_])[a-zA-Z0-9\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_]{8,}$/.test(
+            value
+          );
+        },
       },
     },
   },
@@ -122,7 +131,7 @@ export default {
       this.$v.$reset();
       this.form.email = null;
       this.form.newPassword = null;
-      router.push({ path: "/resetPassword" });
+      router.push({ path: "/loginUser" });
     },
     resetPassword() {
       this.sending = true;
@@ -136,7 +145,7 @@ export default {
       userServices
         .resetPassword(data)
         .then((res) => {
-          console.log(res);
+          console.log(res.data.message);
           this.snackbar = true;
           this.snackbarText = `${res.data.message}`;
           this.clearForm();
@@ -162,7 +171,5 @@ export default {
   },
 };
 </script>
-
 <style lang = "scss" scoped>
-@import url("../scss/resetPasword.scss");
 </style>
