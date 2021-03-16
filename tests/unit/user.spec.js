@@ -6,7 +6,7 @@ import Vuelidate from "vuelidate";
 /**
  * @description test cases for resgister.vue
  */
-/* describe('register.vue', () => {
+describe('register.vue', () => {
   let warpper;
   beforeEach(() => {
     const localVue = createLocalVue();
@@ -14,7 +14,7 @@ import Vuelidate from "vuelidate";
     warpper = shallowMount(register, localVue);
   });
 
- it('renders a vue instance', () => {
+  it('renders a vue instance', () => {
     expect(shallowMount(register).isVueInstance()).toBe(true);
   });
 
@@ -149,7 +149,7 @@ import Vuelidate from "vuelidate";
     expect(warpper.vm.$v.form.cpassword.$invalid).toBe(false);
   });
 })
- */
+
 
 /**
  * @description test cases for login.vue
@@ -226,6 +226,4 @@ describe('login.vue', () => {
     wrapper.vm.form.password = 'Aad$ffjk34'
     expect(wrapper.vm.$v.form.password.$invalid).toBe(false);
   });
-
-
 })
