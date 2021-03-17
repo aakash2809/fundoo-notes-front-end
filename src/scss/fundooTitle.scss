@@ -1,37 +1,43 @@
-v-card-title {
-    font-size: 25px;
-   
-  }
+$color-blue:rgb(12, 12, 22);
+$color-orange:orange;
+$color-purple:rgb(92, 62, 92);
+$color-green:green;
+$color-lightcoral: lightcoral;
+$color-brown:brown;
+$color-maroon:maroon;
+$color-lightskyblue:lightskyblue;
+$color-red:red;
+
   .md-title-col1 {
-    color: blue;
+    color:$color-blue;
   }
   .md-title-col2 {
-    color: brown;
+    color: $color-brown;
   }
   .md-title-col3 {
-    color: orange;
+    color: $color-orange;
   }
   .md-title-col4 {
-    color: purple;
+    color: $color-purple;
   }
   .md-title-col5 {
-    color: green;
+    color: $color-green;
   }
   .md-title-col6 {
-    color: lightcoral;
+    color:$color-lightcoral;
   }
   .md-title-col7 {
-    color: blue;
+    color: $color-blue;
   }
   .md-title-col8 {
-    color: maroon;
+    color: $color-maroon;
   }
   .md-title-col9 {
-    color: lightskyblue;
+    color: $color-lightskyblue;
   }
   .md-title-col10 {
-    color: red;
+    color: $color-red;
   }
   .md-title-col11 {
-    color: green;
+    color:$color-green;
   }

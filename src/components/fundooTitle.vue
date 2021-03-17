@@ -1,5 +1,5 @@
 <template>
-  <v-card-title>
+  <md-card-title>
     <span class="md-title-col1">F</span>
     <span class="md-title-col2">u</span>
     <span class="md-title-col3">n</span>
@@ -11,13 +11,15 @@
     <span class="md-title-col9">t</span>
     <span class="md-title-col10">e</span>
     <span class="md-title-col11">s</span>
-  </v-card-title>
+  </md-card-title>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "fundooTitle",
+};
 </script>
 
-<style lang = "scss" scoped>
-@import url("../scss/fundooTitle.scss");
+<style lang = "scss"  scoped>
+@import "src/scss/fundooTitle.scss";
 </style>
