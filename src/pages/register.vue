@@ -11,7 +11,7 @@
           <div class="md-layout-item md-small-size-100">
             <md-card-header>
               <div class="md-title">
-                <Title />
+                <fundooTitle></fundooTitle>
               </div>
               <br />
               <div class="md-subheading">Create Fundoo Account</div>
@@ -21,13 +21,12 @@
               <div class="md-layout md-gutter">
                 <div class="md-layout-item md-size-50 md-small-size-100">
                   <md-field :class="getValidationClass('firstName')">
-                    <label for="last-name">First Name</label>
+                    <label for="first-name">First Name</label>
                     <md-input
                       id="first-name"
                       v-model="form.firstName"
                       label="First name"
                       autocomplete="off"
-                      :disabled="sending"
                     />
 
                     <span class="md-error" v-if="!$v.form.firstName.required"
@@ -50,7 +49,6 @@
                       v-model="form.lastName"
                       outline
                       dense
-                      :disabled="sending"
                     />
                     <span class="md-error" v-if="!$v.form.lastName.required"
                       >The last name is required</span
@@ -73,7 +71,6 @@
                   name="email"
                   id="email"
                   v-model="form.email"
-                  :disabled="sending"
                 />
                 <span class="md-error" v-if="!$v.form.email.required"
                   >The email is required</span
@@ -92,7 +89,6 @@
                       type="password"
                       id="password"
                       v-model="form.password"
-                      :disabled="sending"
                     />
                     <span class="md-error" v-if="!$v.form.password.required"
                       >The password is required</span
@@ -113,7 +109,6 @@
                       type="password"
                       id="cpassword"
                       v-model="form.cpassword"
-                      :disabled="sending"
                     />
                     <span class="md-error" v-if="!$v.form.cpassword.required"
                       >The confirm password is required</span
@@ -134,7 +129,7 @@
                     >sign in instead</router-link
                   >
                 </span>
-                <md-button type="submit" class="md-raised md-primary"
+                <md-button type="submit" class="md-primary md-raised"
                   >Next</md-button
                 >
               </md-card-actions>
@@ -171,129 +166,128 @@
 import { validationMixin } from "vuelidate";
 import router from "../router";
 import { required, email, minLength } from "vuelidate/lib/validators";
-import Title from "../components/fundooTitle";
+import fundooTitle from "../components/fundooTitle";
 import userServices from "../services/user";
 
 export default {
-  name: "SignUp",
-  mixins: [validationMixin],
-  data: () => ({
-    form: {
-      firstName: null,
-      lastName: null,
-      email: null,
-      password: null,
-      cpassword: null,
-    },
+	name: "SignUp",
+	mixins: [validationMixin],
+	data: () => ({
+		form: {
+			firstName: null,
+			lastName: null,
+			email: null,
+			password: null,
+			cpassword: null,
+		},
 
-    sending: false,
-    snackbar: false,
-    snackbarText: "",
-  }),
-  validations: {
-    form: {
-      firstName: {
-        required,
-        minLength: minLength(3),
-        isUnique(value) {
-          if (typeof value === "undefined" || value === null || value === "") {
-            return true;
-          }
-          return /^[A-Z]{1}[a-zA-Z ]{2,}$/.test(value);
-        },
-      },
-      lastName: {
-        required,
-        minLength: minLength(3),
-        isUnique(value) {
-          if (typeof value === "undefined" || value === null || value === "") {
-            return true;
-          }
-          return /^[A-Z]{1}[a-zA-Z ]{2,}$/.test(value);
-        },
-      },
-      email: {
-        required,
-        email,
-      },
-      password: {
-        required,
-        minLength: minLength(8),
-        isUnique(value) {
-          if (typeof value === "undefined" || value === null || value === "") {
-            return true;
-          }
-          return /^(?=.*[0-9])(?=.*[A-Z])(?=.*[\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_])[a-zA-Z0-9\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_]{8,}$/.test(
-            value
-          );
-        },
-      },
-      cpassword: {
-        required,
-        minLength: minLength(8),
-      },
-    },
-  },
-  methods: {
-    getValidationClass(fieldName) {
-      const field = this.$v.form[fieldName];
-      if (field) {
-        return {
-          "md-invalid": field.$invalid && field.$dirty,
-        };
-      }
-    },
+		sending: false,
+		snackbar: false,
+		snackbarText: "",
+	}),
+	validations: {
+		form: {
+			firstName: {
+				required,
+				minLength: minLength(3),
+				isUnique(value) {
+					if (typeof value === "undefined" || value === null || value === "") {
+						return true;
+					}
+					return /^[A-Z]{1}[a-zA-Z ]{2,}$/.test(value);
+				},
+			},
+			lastName: {
+				required,
+				minLength: minLength(3),
+				isUnique(value) {
+					if (typeof value === "undefined" || value === null || value === "") {
+						return true;
+					}
+					return /^[A-Z]{1}[a-zA-Z ]{2,}$/.test(value);
+				},
+			},
+			email: {
+				required,
+				email,
+			},
+			password: {
+				required,
+				minLength: minLength(8),
+				isUnique(value) {
+					if (typeof value === "undefined" || value === null || value === "") {
+						return true;
+					}
+					return /^(?=.*[0-9])(?=.*[A-Z])(?=.*[\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_])[a-zA-Z0-9\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_]{8,}$/.test(
+						value
+					);
+				},
+			},
+			cpassword: {
+				required,
+				minLength: minLength(8),
+			},
+		},
+	},
+	methods: {
+		getValidationClass(fieldName) {
+			const field = this.$v.form[fieldName];
+			if (field) {
+				return {
+					"md-invalid": field.$invalid && field.$dirty,
+				};
+			}
+		},
 
-    clearForm() {
-      this.$v.$reset();
-      this.form.firstName = null;
-      this.form.lastName = null;
-      this.form.email = null;
-      this.form.password = null;
-      this.form.cpassword = null;
-      router.push({
-        name: "register",
-      });
-    },
+		clearForm() {
+			this.$v.$reset();
+			this.form.firstName = null;
+			this.form.lastName = null;
+			this.form.email = null;
+			this.form.password = null;
+			this.form.cpassword = null;
+			router.push({ path: "/register" });
+		},
 
-    saveUser() {
-      this.sending = true;
-      let data = {
-        name: this.form.firstName,
-        lastName: this.form.lastName,
-        email: this.form.email,
-        password: this.form.password,
-        confirmPassword: this.form.cpassword,
-      };
+		saveUser() {
+			this.sending = true;
+			let data = {
+				name: this.form.firstName,
+				lastName: this.form.lastName,
+				email: this.form.email,
+				password: this.form.password,
+				confirmPassword: this.form.cpassword,
+			};
 
-      console.log("signup details: ", data);
+			console.log("signup details: ", data);
 
-      userServices
-        .registerUser(data)
-        .then((res) => {
-          console.log("resiponse", res);
-          this.snackbar = true;
-          this.snackbarText = `${res.data.message}`;
-          this.clearForm();
-        })
-        .catch((error) => {
-          this.snackbar = true;
-          this.snackbarText = `internal server error`;
-          console.log(error);
-        });
-    },
+			userServices
+				.registerUser(data)
+				.then((res) => {
+					console.log("resiponse", res);
+					this.snackbar = true;
+					this.snackbarText = `${res.data.message}`;
+					this.clearForm();
+				})
+				.catch((error) => {
+					this.snackbar = true;
+					this.snackbarText = `internal server error`;
+					this.clearForm();
+					console.log(error);
+				});
+		},
 
-    validateUser() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        this.saveUser();
-      }
-    },
-  },
+		validateUser() {
+			this.$v.$touch();
+			if (!this.$v.$invalid) {
+				this.saveUser();
+			}
+		},
+	},
 
-  components: {
-    Title,
-  },
+	components: {
+		fundooTitle,
+	},
 };
 </script>
 
