@@ -5,14 +5,17 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import './services/axios.config'
+import vuetify from './plugins/vuetify';
 
 Vue.use(router);
 
 Vue.config.productionTip = false;
 Vue.use(VueMaterial);
+Vue.use(vuetify);
 new Vue({
-  router,
-  render: h => h(App),
+	router,
+	vuetify,
+	render: h => h(App)
 }).$mount('#app')
 
 
