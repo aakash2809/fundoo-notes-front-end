@@ -6,12 +6,12 @@
 <script>
 import Home from "../components/home.vue";
 export default {
-	name: "dashBoard",
-	components: {
-		Home,
-	},
-	data() {
-		return { firstName: `${localStorage.getItem("firstName")}` };
-	},
+  name: "dashBoard",
+  components: {
+    Home,
+  },
+  data() {
+    return { firstName: `${localStorage.getItem("firstName")}` };
+  },
 };
 </script>
