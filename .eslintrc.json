@@ -18,11 +18,32 @@
         "vue"
     ],
     "rules": {
-        "indent": [
+        "quotes": [
             "error",
-            "tab"
-        ]
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-mixed-spaces-and-tabs": "error",
+        "no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "none"
+            }
+        ],
+        "template-curly-spacing": "off",
+        "indent": "off"
     },
+    "ignorePatterns": [
+        "./node_modules/",
+        "./.vscode/",
+        "./logs/",
+        "./.git/",
+        "./tests/"
+    ],
     "overrides": [
         {
             "files": [
