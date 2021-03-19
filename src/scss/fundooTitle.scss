@@ -1,12 +1,4 @@
-$color-blue:rgb(12, 12, 22);
-$color-orange:orange;
-$color-purple:rgb(92, 62, 92);
-$color-green:green;
-$color-lightcoral: lightcoral;
-$color-brown:brown;
-$color-maroon:maroon;
-$color-lightskyblue:lightskyblue;
-$color-red:red;
+@import "colors";
 
   .md-title-col1 {
     color:$color-blue;
