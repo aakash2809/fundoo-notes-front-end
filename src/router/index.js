@@ -5,8 +5,9 @@ import SignUp from '@/pages/register';
 import Login from '@/pages/login';
 import ForgotPassword from '@/pages/forgotPassword';
 import ResetPassword from '@/pages/resetPassword';
-import Home from '@/components/home';
+import Header from '@/components/header';
 import DashBoard from '@/pages/dashBoard';
+import SideNav from '@/components/sideNav';
 
 Vue.use(Router);
 
@@ -31,12 +32,16 @@ export default new Router({
 		},
 		{
 			path: '/',
-			name: 'Home',
-			component: Home
+			name: 'Header',
+			component: Header
 		},
 		{
 			path: '/dashBoard',
 			component: DashBoard
+		},
+		{
+			path: '/sideNav',
+			component: SideNav
 		}
 	],
 	mode: 'history'
