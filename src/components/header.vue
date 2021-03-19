@@ -17,9 +17,8 @@
           "
           alt=""
           aria-hidden="true"
-          style="width: 40px; height: 40px"
-        /><span class="gb_6d gb_Wc">FundooNotes</span></a
-      >
+          style="width: 40px; height: 40px" /></a
+      ><span>FundooNotes</span>
       <v-spacer></v-spacer>
       <v-text-field
         class="search-field"
@@ -28,23 +27,16 @@
         label="Search"
         prepend-inner-icon="mdi-magnify"
         clearable
+        hide-details
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-row>
-        <v-col> <v-icon>mdi-refresh</v-icon> </v-col>
-        <v-col><v-icon>mdi mdi-view-grid</v-icon></v-col>
-        <v-col><v-icon>mdi mdi-brightness-7</v-icon></v-col>
-        <v-col> <v-icon>mdi mdi-apps</v-icon></v-col>
-        <v-col>
-          <v-avatar color="indigo" size="36">
-            <span class="white--text headline">A</span>
-          </v-avatar></v-col
-        >
-      </v-row>
+      <v-avatar color="indigo" size="36">
+        <span class="white--text headline">A</span>
+      </v-avatar>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute bottom temporary>
-      <v-list danse>
+      <v-list class="mx-auto" v-model="selectedItem" shaped danse>
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
