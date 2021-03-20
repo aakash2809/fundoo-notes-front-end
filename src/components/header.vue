@@ -1,10 +1,13 @@
 <template>
   <div>
     <v-row>
-      <v-app-bar height="extended">
-        <v-app-bar-nav-icon v-on:click="cont = !cont"></v-app-bar-nav-icon>
+      <v-app-bar height="extended" color="white">
+        <v-app-bar-nav-icon
+          class="pt-3"
+          v-on:click="cont = !cont"
+        ></v-app-bar-nav-icon>
         <img
-          class="gb_uc gb_7d"
+          class="gb_uc gb_7d pt-3"
           src="https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png"
           srcset="
             https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png 1x,
@@ -14,19 +17,20 @@
           aria-hidden="true"
           style="width: 40px; height: 40px"
         />
-        <span>FundooNotes</span>
+        <span class="pt-3">FundooNotes</span>
         <v-spacer></v-spacer>
         <v-text-field
           class="search-field pt-3"
-          solo
           rounded
+          solo
+          filled
           label="Search"
           prepend-inner-icon="mdi-magnify"
           clearable
           hide-details
         ></v-text-field>
         <v-spacer></v-spacer>
-        <v-avatar color="indigo" size="36">
+        <v-avatar class="mt-4" color="indigo" size="36">
           <span class="white--text headline">A</span>
         </v-avatar>
       </v-app-bar>
