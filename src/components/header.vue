@@ -1,14 +1,9 @@
 <template>
-  <div class="header">
-    <v-app-bar>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <a
-        class="gb_me gb_qc gb_ke"
-        aria-label="FundooNotes"
-        href="#"
-        tabindex="0"
-        title="FundooNotes"
-        ><img
+  <div>
+    <v-row>
+      <v-app-bar height="extended">
+        <v-app-bar-nav-icon v-on:click="cont = !cont"></v-app-bar-nav-icon>
+        <img
           class="gb_uc gb_7d"
           src="https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png"
           srcset="
@@ -17,54 +12,110 @@
           "
           alt=""
           aria-hidden="true"
-          style="width: 40px; height: 40px" /></a
-      ><span>FundooNotes</span>
-      <v-spacer></v-spacer>
-      <v-text-field
-        class="search-field"
-        solo
-        rounded
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        clearable
-        hide-details
-      ></v-text-field>
-      <v-spacer></v-spacer>
-      <v-avatar color="indigo" size="36">
-        <span class="white--text headline">A</span>
-      </v-avatar>
-    </v-app-bar>
+          style="width: 40px; height: 40px"
+        />
+        <span>FundooNotes</span>
+        <v-spacer></v-spacer>
+        <v-text-field
+          class="search-field pt-3"
+          solo
+          rounded
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          clearable
+          hide-details
+        ></v-text-field>
+        <v-spacer></v-spacer>
+        <v-avatar color="indigo" size="36">
+          <span class="white--text headline">A</span>
+        </v-avatar>
+      </v-app-bar>
+    </v-row>
+    <v-row>
+      <v-col>
+        <div class="side-nav">
+          <v-navigation-drawer
+            v-model="drawer"
+            v-on:click="cont = !cont"
+            bottom
+          >
+            <v-list shaped>
+              <v-list-item-group v-model="selectedItem" color="#e6b800">
+                <v-list-item v-for="item in items" :key="item.title" link>
+                  <v-list-item-icon
+                    @mouseover="mouseEnter"
+                    @mouseleave="mouseLeave"
+                  >
+                    <v-icon>{{ item.icon }}</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content v-show="cont">
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer>
+        </div>
+      </v-col>
+      <v-col>
+        <div class="mr-15 pr-15">
+          <v-card class="mt-15">
+            <v-toolbar flat>
+              <v-text-field flat solo rounded label="Title"></v-text-field>
+              <v-spacer></v-spacer>
+              <v-btn icon>
+                <v-icon>mdi-pin-outline</v-icon>
+              </v-btn>
+            </v-toolbar>
 
-    <v-navigation-drawer v-model="drawer" absolute bottom temporary>
-      <v-list class="mx-auto" v-model="selectedItem" shaped danse>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <!-- <div class="header">
-    <span> Hello {{ name }}</span>
-  </div> -->
+            <v-text-field
+              flat
+              solo
+              rounded
+              label="Take a Note..."
+            ></v-text-field>
+            <v-footer flat color="white">
+              <v-btn icon>
+                <v-icon>mdi-bell-plus-outline</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi mdi-cookie-outline</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi mdi-image-outline</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+              <v-btn disabled icon>
+                <v-icon>mdi mdi mdi-redo-variant mdi-rotate-180</v-icon>
+              </v-btn>
+              <v-btn disabled icon>
+                <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
+              ><v-spacer></v-spacer>
+              <v-btn flat shaped> close </v-btn>
+            </v-footer>
+          </v-card>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
+
 <script>
 export default {
   name: "Home",
-  /*props: ["name"],
-}; */
 
   data: () => ({
-    drawer: false,
-    // group: null,
+    toShowOnHover: false,
+    cont: false,
     selectedItem: 1,
-
     items: [
       { title: "Notes", icon: "mdi mdi-lightbulb-outline" },
       { title: "Reminder", icon: "mdi mdi-bell-outline" },
@@ -74,10 +125,12 @@ export default {
       { title: "Archive", icon: "mdi mdi-exit-to-app mdi-rotate-90" },
     ],
   }),
-
-  watch: {
-    group() {
-      this.drawer = false;
+  methods: {
+    mouseEnter: function () {
+      this.cont = !this.cont;
+    },
+    mouseLeave: function () {
+      this.cont = false;
     },
   },
 };

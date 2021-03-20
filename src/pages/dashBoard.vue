@@ -3,19 +3,19 @@
     <div>
       <Home v-bind:name="firstName" />
     </div>
-    <div>
+    <!--  <div>
       <SideNav />
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 import Home from "../components/header.vue";
-import SideNav from "../components/sideNav.vue";
+//import SideNav from "../components/sideNav.vue";
 export default {
   name: "dashBoard",
   components: {
     Home,
-    SideNav,
+    //SideNav,
   },
   data() {
     return { firstName: `${localStorage.getItem("firstName")}` };
