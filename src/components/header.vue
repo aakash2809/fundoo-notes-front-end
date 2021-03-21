@@ -43,7 +43,7 @@
             v-on:click="cont = !cont"
             bottom
           >
-            <v-list shaped>
+            <v-list shaped app>
               <v-list-item-group v-model="selectedItem" color="#e6b800">
                 <v-list-item v-for="item in items" :key="item.title" link>
                   <v-list-item-icon
@@ -65,7 +65,13 @@
         <div class="mr-15 pr-15">
           <v-card class="mt-15">
             <v-toolbar flat>
-              <v-text-field flat solo rounded label="Title"></v-text-field>
+              <v-text-field
+                flat
+                solo
+                rounded
+                label="Title"
+                v-model="noteTitle"
+              ></v-text-field>
               <v-spacer></v-spacer>
               <v-btn icon>
                 <v-icon>mdi-pin-outline</v-icon>
@@ -73,6 +79,7 @@
             </v-toolbar>
 
             <v-text-field
+              v-model="description"
               flat
               solo
               rounded
@@ -103,7 +110,7 @@
               <v-btn disabled icon>
                 <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
               ><v-spacer></v-spacer>
-              <v-btn flat shaped> close </v-btn>
+              <v-btn flat shaped v-on:click="takeNote"> close </v-btn>
             </v-footer>
           </v-card>
         </div>
@@ -113,10 +120,13 @@
 </template>
 
 <script>
+import userServices from "../services/user";
 export default {
   name: "Home",
 
   data: () => ({
+    noteTitle: "",
+    description: "",
     toShowOnHover: false,
     cont: false,
     selectedItem: 1,
@@ -135,6 +145,33 @@ export default {
     },
     mouseLeave: function () {
       this.cont = false;
+    },
+    clearNote() {
+      this.noteTitle = "";
+      this.description = "";
+    },
+    //add note
+    takeNote() {
+      this.sending = true;
+      let data = {
+        title: this.noteTitle,
+        description: this.description,
+      };
+      console.log("add Note data: ", data);
+      userServices
+        .addNote(data)
+        .then((res) => {
+          if (res.data.success) {
+            console.log("if-response", res);
+
+            this.clearNote();
+          } else {
+            console.log("else-response", res);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
