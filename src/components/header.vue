@@ -45,7 +45,12 @@
           >
             <v-list shaped app>
               <v-list-item-group v-model="selectedItem" color="#e6b800">
-                <v-list-item v-for="item in items" :key="item.title" link>
+                <v-list-item
+                  v-for="item in items"
+                  :key="item.title"
+                  link
+                  @click="selectFucntion(item.title)"
+                >
                   <v-list-item-icon
                     @mouseover="mouseEnter"
                     @mouseleave="mouseLeave"
@@ -62,58 +67,112 @@
         </div>
       </v-col>
       <v-col>
-        <div class="mr-15 pr-15">
-          <v-card class="mt-15">
-            <v-toolbar flat>
+        <v-row>
+          <div class="mr-15 pr-15">
+            <v-card class="mt-15">
+              <v-toolbar flat>
+                <v-text-field
+                  flat
+                  solo
+                  rounded
+                  label="Title"
+                  v-model="noteTitle"
+                ></v-text-field>
+                <v-spacer></v-spacer>
+                <v-btn icon>
+                  <v-icon>mdi-pin-outline</v-icon>
+                </v-btn>
+              </v-toolbar>
+
               <v-text-field
+                v-model="description"
                 flat
                 solo
                 rounded
-                label="Title"
-                v-model="noteTitle"
+                label="Take a Note..."
               ></v-text-field>
-              <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-pin-outline</v-icon>
-              </v-btn>
-            </v-toolbar>
+              <v-footer flat color="white">
+                <v-btn icon>
+                  <v-icon>mdi-bell-plus-outline</v-icon>
+                </v-btn>
+                <v-btn icon>
+                  <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                </v-btn>
+                <v-btn icon>
+                  <v-icon>mdi mdi-cookie-outline</v-icon>
+                </v-btn>
+                <v-btn icon>
+                  <v-icon>mdi mdi-image-outline</v-icon>
+                </v-btn>
+                <v-btn icon>
+                  <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                </v-btn>
+                <v-btn icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+                <v-btn disabled icon>
+                  <v-icon>mdi mdi mdi-redo-variant mdi-rotate-180</v-icon>
+                </v-btn>
+                <v-btn disabled icon>
+                  <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
+                ><v-spacer></v-spacer>
+                <v-btn flat shaped v-on:click="takeNote"> close </v-btn>
+              </v-footer>
+            </v-card>
+          </div>
+        </v-row>
+        <v-row>
+          <div v-if="isActivate">
+            <div v-for="item in noteData" :key="item" link>
+              <v-card class="mt-15">
+                <v-toolbar flat>
+                  <v-card-title></v-card-title>
+                  <v-text-field flat solo rounded v-model="item.title">
+                  </v-text-field>
+                  <v-spacer></v-spacer>
+                  <v-btn icon>
+                    <v-icon>mdi-pin-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
 
-            <v-text-field
-              v-model="description"
-              flat
-              solo
-              rounded
-              label="Take a Note..."
-            ></v-text-field>
-            <v-footer flat color="white">
-              <v-btn icon>
-                <v-icon>mdi-bell-plus-outline</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi mdi-cookie-outline</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi mdi-image-outline</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-              <v-btn disabled icon>
-                <v-icon>mdi mdi mdi-redo-variant mdi-rotate-180</v-icon>
-              </v-btn>
-              <v-btn disabled icon>
-                <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
-              ><v-spacer></v-spacer>
-              <v-btn flat shaped v-on:click="takeNote"> close </v-btn>
-            </v-footer>
-          </v-card>
-        </div>
+                <v-text-field
+                  flat
+                  solo
+                  rounded
+                  v-model="item.description"
+                ></v-text-field>
+                <v-footer flat color="white">
+                  <v-btn icon>
+                    <v-icon>mdi-bell-plus-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-cookie-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-image-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                  <v-btn disabled icon>
+                    <v-icon>mdi mdi mdi-redo-variant mdi-rotate-180</v-icon>
+                  </v-btn>
+                  <v-btn disabled icon>
+                    <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
+                  ><v-spacer></v-spacer>
+                  <v-btn flat shaped v-on:click="takeNote"> close </v-btn>
+                </v-footer>
+              </v-card>
+              <v-spacer></v-spacer>
+            </div>
+          </div>
+        </v-row>
       </v-col>
     </v-row>
   </div>
@@ -123,12 +182,14 @@
 import userServices from "../services/user";
 export default {
   name: "Home",
-
   data: () => ({
     noteTitle: "",
     description: "",
+
+    noteData: [],
     toShowOnHover: false,
     cont: false,
+    isActivate: false,
     selectedItem: 1,
     items: [
       { title: "Notes", icon: "mdi mdi-lightbulb-outline" },
@@ -150,6 +211,7 @@ export default {
       this.noteTitle = "";
       this.description = "";
     },
+
     //add note
     takeNote() {
       this.sending = true;
@@ -168,6 +230,30 @@ export default {
           } else {
             console.log("else-response", res);
           }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    //select function to call for navigation list
+    selectFucntion(action) {
+      console.log("clicked:", action);
+      if (action == "Notes") {
+        this.getAllNotes();
+      }
+    },
+    //get All Notes
+    getAllNotes() {
+      this.sending = true;
+      console.log(" Users Notes: ");
+      userServices
+        .fetchAllNotes()
+        .then((res) => {
+          this.isActivate = true;
+          this.noteData = res.data.data;
+          console.log("response : ", res.data.data);
+          console.log("nodeData : ", this.noteData);
         })
         .catch((error) => {
           console.log(error);
