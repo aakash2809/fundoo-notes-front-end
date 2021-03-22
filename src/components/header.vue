@@ -36,24 +36,26 @@
       </v-app-bar>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="3">
         <div class="side-nav">
           <v-navigation-drawer
             v-model="drawer"
             v-on:click="cont = !cont"
             bottom
+        expand-on-hover
+         
           >
             <v-list shaped app>
-              <v-list-item-group v-model="selectedItem" color="#e6b800">
+              <v-list-item-group v-model="selectedItem" color="#e6b800" @click.native.stop="expand" > 
                 <v-list-item
                   v-for="item in items"
                   :key="item.title"
                   link
                   @click="selectFucntion(item.title)"
+               
                 >
                   <v-list-item-icon
-                    @mouseover="mouseEnter"
-                    @mouseleave="mouseLeave"
+                   
                   >
                     <v-icon>{{ item.icon }}</v-icon>
                   </v-list-item-icon>
@@ -66,17 +68,20 @@
           </v-navigation-drawer>
         </div>
       </v-col>
-      <v-col>
+      <v-col cols="8">
         <v-row>
-          <div class="mr-15 pr-15">
-            <v-card class="mt-15">
-              <v-toolbar flat>
+          <div class="content">
+            <v-card class="mx-auto mt-15" width="500px" height="200px">
+             
+              <v-toolbar flat >
                 <v-text-field
+                class="note-title-bar"
                   flat
                   solo
                   rounded
                   label="Title"
                   v-model="noteTitle"
+                  
                 ></v-text-field>
                 <v-spacer></v-spacer>
                 <v-btn icon>
@@ -116,7 +121,9 @@
                 <v-btn disabled icon>
                   <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
                 ><v-spacer></v-spacer>
-                <v-btn flat shaped v-on:click="takeNote"> close </v-btn>
+                <v-btn shaped v-on:click="takeNote" color="white"  border: none>
+                  close
+                </v-btn>
               </v-footer>
             </v-card>
           </div>
@@ -166,7 +173,7 @@
                   <v-btn disabled icon>
                     <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
                   ><v-spacer></v-spacer>
-                  <v-btn flat shaped v-on:click="takeNote"> close </v-btn>
+                  <v-btn flat shaped> close </v-btn>
                 </v-footer>
               </v-card>
               <v-spacer></v-spacer>
