@@ -42,21 +42,21 @@
             v-model="drawer"
             v-on:click="cont = !cont"
             bottom
-        expand-on-hover
-         
+            expand-on-hover
           >
             <v-list shaped app>
-              <v-list-item-group v-model="selectedItem" color="#e6b800" @click.native.stop="expand" > 
+              <v-list-item-group
+                v-model="selectedItem"
+                color="#e6b800"
+                @click.native.stop="expand"
+              >
                 <v-list-item
                   v-for="item in items"
                   :key="item.title"
                   link
                   @click="selectFucntion(item.title)"
-               
                 >
-                  <v-list-item-icon
-                   
-                  >
+                  <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content v-show="cont">
@@ -68,85 +68,34 @@
           </v-navigation-drawer>
         </div>
       </v-col>
-      <v-col cols="8">
+      <v-col cols="9">
         <v-row>
-          <div class="content">
-            <v-card class="mx-auto mt-15" width="500px" height="200px">
-             
-              <v-toolbar flat >
-                <v-text-field
-                class="note-title-bar"
-                  flat
-                  solo
-                  rounded
-                  label="Title"
-                  v-model="noteTitle"
-                  
-                ></v-text-field>
-                <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>mdi-pin-outline</v-icon>
-                </v-btn>
-              </v-toolbar>
-
-              <v-text-field
-                v-model="description"
-                flat
-                solo
-                rounded
-                label="Take a Note..."
-              ></v-text-field>
-              <v-footer flat color="white">
-                <v-btn icon>
-                  <v-icon>mdi-bell-plus-outline</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi mdi-cookie-outline</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi mdi-image-outline</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-                <v-btn disabled icon>
-                  <v-icon>mdi mdi mdi-redo-variant mdi-rotate-180</v-icon>
-                </v-btn>
-                <v-btn disabled icon>
-                  <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
-                ><v-spacer></v-spacer>
-                <v-btn shaped v-on:click="takeNote" color="white"  border: none>
-                  close
-                </v-btn>
-              </v-footer>
-            </v-card>
-          </div>
-        </v-row>
-        <v-row>
-          <div v-if="isActivate">
-            <div v-for="item in noteData" :key="item" link>
-              <v-card class="mt-15">
+          <v-col
+            cols="6"
+            v-click-outside="onClickOutside"
+            @click="active = true"
+          >
+            <v-card class="mx-auto my-8 note-card window" elevation="8">
+              <div v-if="active">
                 <v-toolbar flat>
-                  <v-card-title></v-card-title>
-                  <v-text-field flat solo rounded v-model="item.title">
-                  </v-text-field>
+                  <v-text-field
+                    class="note-title-bar"
+                    flat
+                    solo
+                    label="Title"
+                    v-model="noteTitle"
+                  ></v-text-field>
                   <v-spacer></v-spacer>
                   <v-btn icon>
                     <v-icon>mdi-pin-outline</v-icon>
                   </v-btn>
                 </v-toolbar>
-
                 <v-text-field
+                  v-model="description"
                   flat
                   solo
                   rounded
-                  v-model="item.description"
+                  label="Take a Note..."
                 ></v-text-field>
                 <v-footer flat color="white">
                   <v-btn icon>
@@ -167,13 +116,83 @@
                   <v-btn icon>
                     <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
-                  <v-btn disabled icon>
-                    <v-icon>mdi mdi mdi-redo-variant mdi-rotate-180</v-icon>
+                  <v-spacer></v-spacer>
+                  <v-btn text v-on:click="takeNote"> close </v-btn>
+                </v-footer>
+              </div>
+              <div v-if="!active">
+                <v-toolbar flat>
+                  <v-text-field
+                    class="note-title-bar"
+                    flat
+                    solo
+                    label="Take a Note..."
+                    v-model="noteTitle"
+                  ></v-text-field>
+                  <v-spacer></v-spacer>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-checkbox-marked-outline</v-icon>
                   </v-btn>
-                  <v-btn disabled icon>
-                    <v-icon>mdi mdi-redo-variant</v-icon> </v-btn
+                  <v-btn icon>
+                    <v-icon>mdi mdi-brush</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi-image-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <div v-if="isActivate">
+            <div v-for="item in noteData" :key="item" link>
+              <v-card class="mt-15">
+                <div>
+                  <v-text-field
+                    justify="center"
+                    flat
+                    solo
+                    rounded
+                    v-model="item.title"
+                  >
+                  </v-text-field>
+                  <v-spacer></v-spacer>
+                  <v-btn icon>
+                    <v-icon>mdi-pin-outline</v-icon>
+                  </v-btn>
+                </div>
+                <div>
+                  <v-text-field
+                    flat
+                    solo
+                    rounded
+                    v-model="item.description"
+                  ></v-text-field>
+                </div>
+
+                <v-footer flat color="white">
+                  <v-btn icon>
+                    <v-icon>mdi-bell-plus-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-cookie-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-image-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+
                   ><v-spacer></v-spacer>
-                  <v-btn flat shaped> close </v-btn>
+                  <v-btn text> close </v-btn>
                 </v-footer>
               </v-card>
               <v-spacer></v-spacer>
@@ -197,7 +216,8 @@ export default {
     toShowOnHover: false,
     cont: false,
     isActivate: false,
-    selectedItem: 1,
+    active: false,
+    selectedItem: 0,
     items: [
       { title: "Notes", icon: "mdi mdi-lightbulb-outline" },
       { title: "Reminder", icon: "mdi mdi-bell-outline" },
@@ -219,8 +239,17 @@ export default {
       this.description = "";
     },
 
+    //onclickOUtside
+    onClickOutside() {
+      console.log("outsider called");
+      this.active = false;
+    },
     //add note
     takeNote() {
+      console.log("before outsider called", this.active);
+      this.onClickOutside();
+      console.log("before outsider called", this.active);
+      console.log(this.active);
       this.sending = true;
       let data = {
         title: this.noteTitle,
