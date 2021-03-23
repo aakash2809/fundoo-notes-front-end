@@ -8,6 +8,10 @@ import ResetPassword from '@/pages/resetPassword';
 import Header from '@/components/header';
 import DashBoard from '@/pages/dashBoard';
 import SideNav from '@/components/sideNav';
+import Note from '@/components/note';
+
+import DashBoard1 from '@/pages/dashBoard1';
+import Header1 from '@/components/header1';
 
 Vue.use(Router);
 
@@ -42,7 +46,21 @@ export default new Router({
 		{
 			path: '/sideNav',
 			component: SideNav
-		}
+		},
+		{
+			path: '/note',
+			component: Note
+		},
+
+		{
+			path: '/dashBoard1',
+			component: DashBoard1
+		},
+		{
+			path: '/header1',
+			name: 'Header1',
+			component: Header1
+		},
 	],
 	mode: 'history'
 });
