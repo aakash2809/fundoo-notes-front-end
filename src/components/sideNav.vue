@@ -1,19 +1,46 @@
 <template>
-  <div class="side-nav">
+  <!--  <div class="side-nav">
     <v-navigation-drawer>
-      <v-list max-width="400" height="550">
+      <v-list max-width="400" height="550" shaped>
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
-
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </div>
+  </div> -->
+  <v-navigation-drawer
+    v-model="drawer"
+    v-on:click="cont = !cont"
+    bottom
+    expand-on-hover
+  >
+    <v-list shaped app>
+      <v-list-item-group
+        v-model="selectedItem"
+        color="#e6b800"
+        @click.native.stop="expand"
+      >
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+          @click="selectFucntion(item.title)"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content v-show="cont">
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 <script>
 export default {
@@ -33,7 +60,7 @@ export default {
 </script>
  
 <style lang = "scss" scoped>
-.side-nav {
+/* .side-nav {
   padding-top: -40px;
-}
+} */
 </style>
