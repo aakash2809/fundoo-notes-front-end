@@ -1,25 +1,14 @@
 <template>
-  <!--  <div class="side-nav">
-    <v-navigation-drawer>
-      <v-list max-width="400" height="550" shaped>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-  </div> -->
   <v-navigation-drawer
     v-model="drawer"
     v-on:click="cont = !cont"
     bottom
+    permanent
     expand-on-hover
+    height="100%"
+    class="pb-2"
   >
-    <v-list shaped app>
+    <v-list shaped>
       <v-list-item-group
         v-model="selectedItem"
         color="#e6b800"
@@ -34,7 +23,7 @@
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-content v-show="cont">
+          <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -47,6 +36,7 @@ export default {
   name: "SideNav",
   data: () => ({
     selectedItem: 1,
+    drawer: true,
     items: [
       { title: "Notes", icon: "mdi mdi-lightbulb-outline" },
       { title: "Reminder", icon: "mdi mdi-bell-outline" },
@@ -60,7 +50,7 @@ export default {
 </script>
  
 <style lang = "scss" scoped>
-/* .side-nav {
-  padding-top: -40px;
-} */
+.drawer {
+  height: "100vh";
+}
 </style>
