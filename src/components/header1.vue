@@ -16,7 +16,6 @@
     <v-spacer></v-spacer>
     <v-text-field
       class="search-field"
-      rounded
       solo
       filled
       label="Search"
