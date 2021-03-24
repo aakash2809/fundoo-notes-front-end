@@ -6,7 +6,7 @@
     <v-row fullscreen>
       <v-col cols="3">
         <div class="side-nav pt-1">
-          <SideNav @click="active = true" />
+          <SideNav />
         </div>
       </v-col>
       <v-col cols="9">
@@ -40,15 +40,7 @@ export default {
 };
 </script>
 <style scoped>
-/* .header {
-  width: 100vw;
-  position: relative;
-  margin-left: -50vw;
-  height: 100px;
-  left: 50%;
-} */
-/* .side-nav {
-  /* height: 650px; */
-
-/* }  */
+.side-nav {
+  height: 650px;
+}
 </style>
