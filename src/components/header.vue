@@ -21,7 +21,6 @@
         <v-spacer></v-spacer>
         <v-text-field
           class="search-field pt-3"
-          rounded
           solo
           filled
           label="Search"
@@ -44,7 +43,7 @@
             bottom
             expand-on-hover
           >
-            <v-list shaped app>
+            <v-list shaped>
               <v-list-item-group
                 v-model="selectedItem"
                 color="#e6b800"
@@ -71,6 +70,7 @@
       <v-col cols="9">
         <v-row>
           <v-col
+            offset-md="2"
             cols="6"
             v-click-outside="onClickOutside"
             @click="active = true"
@@ -79,7 +79,7 @@
               <div v-if="active">
                 <v-toolbar flat>
                   <v-text-field
-                    class="note-title-bar"
+                    class="note-title pt-5"
                     flat
                     solo
                     label="Title"
@@ -91,10 +91,10 @@
                   </v-btn>
                 </v-toolbar>
                 <v-text-field
+                  class="note pl-4"
                   v-model="description"
                   flat
                   solo
-                  rounded
                   label="Take a Note..."
                 ></v-text-field>
                 <v-footer flat color="white">
@@ -123,7 +123,7 @@
               <div v-if="!active">
                 <v-toolbar flat>
                   <v-text-field
-                    class="note-title-bar"
+                    class="note-title pt-5"
                     flat
                     solo
                     label="Take a Note..."
@@ -147,13 +147,13 @@
         <v-row>
           <div v-if="isActivate">
             <div v-for="item in noteData" :key="item" link>
-              <v-card class="mt-15">
-                <div>
+              <v-card class="mx-auto my-8 note-card window" elevation="8">
+                <v-toolbar flat>
                   <v-text-field
                     justify="center"
+                    class="title-field pt-5"
                     flat
                     solo
-                    rounded
                     v-model="item.title"
                   >
                   </v-text-field>
@@ -161,16 +161,13 @@
                   <v-btn icon>
                     <v-icon>mdi-pin-outline</v-icon>
                   </v-btn>
-                </div>
-                <div>
-                  <v-text-field
-                    flat
-                    solo
-                    rounded
-                    v-model="item.description"
-                  ></v-text-field>
-                </div>
-
+                </v-toolbar>
+                <v-text-field
+                  flat
+                  solo
+                  rounded
+                  v-model="item.description"
+                ></v-text-field>
                 <v-footer flat color="white">
                   <v-btn icon>
                     <v-icon>mdi-bell-plus-outline</v-icon>
@@ -190,9 +187,7 @@
                   <v-btn icon>
                     <v-icon>mdi-dots-vertical</v-icon>
                   </v-btn>
-
-                  ><v-spacer></v-spacer>
-                  <v-btn text> close </v-btn>
+                  <v-spacer></v-spacer>
                 </v-footer>
               </v-card>
               <v-spacer></v-spacer>
@@ -227,6 +222,7 @@ export default {
       { title: "Archive", icon: "mdi mdi-exit-to-app mdi-rotate-90" },
     ],
   }),
+
   methods: {
     mouseEnter: function () {
       this.cont = !this.cont;
@@ -241,15 +237,12 @@ export default {
 
     //onclickOUtside
     onClickOutside() {
-      console.log("outsider called");
       this.active = false;
     },
+
     //add note
     takeNote() {
-      console.log("before outsider called", this.active);
-      this.onClickOutside();
-      console.log("before outsider called", this.active);
-      console.log(this.active);
+      //this.onClickOutside();
       this.sending = true;
       let data = {
         title: this.noteTitle,
@@ -261,7 +254,6 @@ export default {
         .then((res) => {
           if (res.data.success) {
             console.log("if-response", res);
-
             this.clearNote();
           } else {
             console.log("else-response", res);
@@ -279,6 +271,7 @@ export default {
         this.getAllNotes();
       }
     },
+
     //get All Notes
     getAllNotes() {
       this.sending = true;
