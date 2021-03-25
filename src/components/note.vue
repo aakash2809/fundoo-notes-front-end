@@ -142,7 +142,7 @@ export default {
         .fetchAllNotes()
         .then((res) => {
           console.log("response : ", res.data.data);
-          EventBus.$emit("all", res.data.data);
+          EventBus.$emit("all", res.data.data.reverse());
         })
         .catch((error) => {
           console.log(error);
