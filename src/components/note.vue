@@ -17,9 +17,14 @@
               v-model="noteTitle"
             ></v-text-field>
             <v-spacer></v-spacer>
-            <v-btn icon>
-              <v-icon>mdi-pin-outline</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi-bell-plus-outline</v-icon>
+                </v-btn>
+              </template>
+              <span>Remind me</span>
+            </v-tooltip>
           </v-toolbar>
           <v-text-field
             class="note pl-4"
@@ -29,24 +34,54 @@
             label="Take a Note..."
           ></v-text-field>
           <v-footer flat color="white">
-            <v-btn icon>
-              <v-icon>mdi-bell-plus-outline</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi mdi-cookie-outline</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi mdi-image-outline</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi-bell-plus-outline</v-icon>
+                </v-btn>
+              </template>
+              <span>Remind me</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi mdi-account-plus-outline</v-icon>
+                </v-btn>
+              </template>
+              <span>collaborator</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi mdi-cookie-outline</v-icon>
+                </v-btn>
+              </template>
+              <span>Colors</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi mdi-image-outline</v-icon>
+                </v-btn>
+              </template>
+              <span>Add image</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                </v-btn>
+              </template>
+              <span>Archive</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+              <span>More</span>
+            </v-tooltip>
             <v-spacer></v-spacer>
             <v-btn text v-on:click="takeNote"> close </v-btn>
           </v-footer>
@@ -60,15 +95,31 @@
               label="Take a Note..."
             ></v-text-field>
             <v-spacer></v-spacer>
-            <v-btn icon>
-              <v-icon>mdi mdi-checkbox-marked-outline</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi mdi-brush</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>mdi-image-outline</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi mdi-checkbox-marked-outline</v-icon>
+                </v-btn>
+              </template>
+              <span>New list</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi mdi-brush</v-icon>
+                </v-btn>
+              </template>
+              <span>New Note with drwaing</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi mdi-image-outline</v-icon>
+                </v-btn>
+              </template>
+              <span>Add note with image</span>
+            </v-tooltip>
           </v-toolbar>
         </div>
       </v-card>
