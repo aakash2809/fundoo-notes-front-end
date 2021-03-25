@@ -31,10 +31,13 @@
     </v-list>
   </v-navigation-drawer>
 </template>
+
 <script>
 import { EventBus } from "@/event-bus";
+
 export default {
   name: "SideNav",
+
   data: () => ({
     selectedItem: 0,
     drawer: true,
@@ -47,12 +50,11 @@ export default {
       { title: "Archive", icon: "mdi mdi-exit-to-app mdi-rotate-90" },
     ],
   }),
-  components: {},
+
   methods: {
     selectFucntion(action) {
-      console.log("clicked:", action);
       if (action == "Notes") {
-        EventBus.$emit("clicked", action);
+        EventBus.$emit("sideNavAction", action);
       }
     },
   },

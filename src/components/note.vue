@@ -73,59 +73,6 @@
         </div>
       </v-card>
     </div>
-    <v-row>
-      <v-layout row wrap>
-        <v-flex class="mr-5, mb-3">
-          <div v-if="isActivate">
-            <div v-for="item in noteData" :key="item" link>
-              <v-card class="mx-auto my-8 note-card window" elevation="8">
-                <v-toolbar flat>
-                  <v-text-field
-                    justify="center"
-                    class="title-field pt-5"
-                    flat
-                    solo
-                    v-model="item.title"
-                  >
-                  </v-text-field>
-                  <v-spacer></v-spacer>
-                  <v-btn icon>
-                    <v-icon>mdi-pin-outline</v-icon>
-                  </v-btn>
-                </v-toolbar>
-                <v-text-field
-                  flat
-                  solo
-                  rounded
-                  v-model="item.description"
-                ></v-text-field>
-                <v-footer flat color="white">
-                  <v-btn icon>
-                    <v-icon>mdi-bell-plus-outline</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>mdi mdi-cookie-outline</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>mdi mdi-image-outline</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-                  </v-btn>
-                  <v-btn icon>
-                    <v-icon>mdi-dots-vertical</v-icon>
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                </v-footer>
-              </v-card>
-            </div>
-          </div>
-        </v-flex>
-      </v-layout>
-    </v-row>
   </div>
 </template>
 
@@ -139,7 +86,6 @@ export default {
     description: "",
     noteData: [],
     active: false,
-    isActivate: false,
   }),
 
   methods: {
@@ -162,17 +108,17 @@ export default {
     //add note
     takeNote() {
       this.active = false;
-
       this.sending = true;
       let data = {
         title: this.noteTitle,
         description: this.description,
       };
+
       console.log("add Note data: ", data);
+
       userServices
         .addNote(data)
         .then((res) => {
-          //this.getAllNotes();
           if (res.data.success) {
             console.log("if-response", res);
             this.clearNote();
@@ -195,10 +141,8 @@ export default {
       userServices
         .fetchAllNotes()
         .then((res) => {
-          this.isActivate = true;
-          this.noteData = res.data.data;
           console.log("response : ", res.data.data);
-          console.log("nodeData : ", this.noteData);
+          EventBus.$emit("all", res.data.data);
         })
         .catch((error) => {
           console.log(error);
@@ -207,7 +151,7 @@ export default {
   },
 
   mounted() {
-    EventBus.$on("clicked", this.getAllNotes);
+    EventBus.$on("sideNavAction", this.getAllNotes);
   },
 };
 </script>
