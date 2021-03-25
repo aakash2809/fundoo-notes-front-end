@@ -58,8 +58,8 @@
                 <span>
                   <router-link to="/forgotPassword" class="route-link1"
                     >forgot password ?</router-link
-                  ></span
-                >
+                  >
+                </span>
                 <div>
                   <span>
                     <router-link to="/register" class="route-link"
@@ -93,103 +93,106 @@ import fundooTitle from "../components/fundooTitle";
 import userServices from "../services/user";
 
 export default {
-	name: "Login",
-	mixins: [validationMixin],
-	data: () => ({
-		form: {
-			email: null,
-			password: null,
-		},
-		snackbar: false,
-		snackbarText: "",
-		sending: false,
-	}),
-	validations: {
-		form: {
-			email: {
-				required,
-				email,
-			},
-			password: {
-				required,
-				minLength: minLength(8),
-				isUnique(value) {
-					if (typeof value === "undefined" || value === null || value === "") {
-						return true;
-					}
-					return /^(?=.*[0-9])(?=.*[A-Z])(?=.*[\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_])[a-zA-Z0-9\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_]{8,}$/.test(
-						value
-					);
-				},
-			},
-		},
-	},
-	methods: {
-		getValidationClass(fieldName) {
-			const field = this.$v.form[fieldName];
-			if (field) {
-				return {
-					"md-invalid": field.$invalid && field.$dirty,
-				};
-			}
-		},
+  name: "Login",
+  mixins: [validationMixin],
+  data: () => ({
+    form: {
+      email: null,
+      password: null,
+    },
+    snackbar: false,
+    snackbarText: "",
+    sending: false,
+  }),
+  validations: {
+    form: {
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+        minLength: minLength(8),
+        isUnique(value) {
+          if (typeof value === "undefined" || value === null || value === "") {
+            return true;
+          }
+          return /^(?=.*[0-9])(?=.*[A-Z])(?=.*[\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_])[a-zA-Z0-9\\~\\?\\.\\+\\-\\~\\!\\@\\#\\$\\%\\^\\&\\*\\_]{8,}$/.test(
+            value
+          );
+        },
+      },
+    },
+  },
+  methods: {
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty,
+        };
+      }
+    },
 
-		clearForm(redirectKey) {
-			this.$v.$reset();
-			this.form.email = null;
-			this.form.password = null;
-			if (redirectKey) {
-				router.push({ path: "/dashBoard" });
-			}
-		},
+    clearForm(redirectKey) {
+      this.$v.$reset();
+      this.form.email = null;
+      this.form.password = null;
+      if (redirectKey) {
+        router.push({
+          path: "/dashBoard",
+        });
+      }
+    },
 
-		login() {
-			this.sending = true;
-			let data = {
-				email: this.form.email,
-				password: this.form.password,
-			};
-			console.log("Login details: ", data);
-			userServices
-				.loginUser(data)
-				.then((res) => {
-					if (res.data.sucess) {
-						localStorage.setItem("token", res.data.token);
-						localStorage.setItem("firstName", res.data.user[0].name);
-						localStorage.setItem("lastName", res.data.user[0].lastName);
-						localStorage.setItem("email", res.data.user[0].email);
+    login() {
+      this.sending = true;
+      let data = {
+        email: this.form.email,
+        password: this.form.password,
+      };
+      console.log("Login details: ", data);
+      userServices
+        .loginUser(data)
+        .then((res) => {
+          if (res.data.success) {
+            console.log("if response: ");
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("firstName", res.data.user[0].name);
+            localStorage.setItem("lastName", res.data.user[0].lastName);
+            localStorage.setItem("email", res.data.user[0].email);
 
-						this.snackbar = true;
-						this.snackbarText = `${res.data.message}`;
-						this.clearForm(res.data.success);
-					} else {
-						this.snackbar = true;
-						this.snackbarText = `${res.data.message}`;
-						this.clearForm(res.data.success);
-					}
-				})
-				.catch((error) => {
-					this.snackbar = true;
-					this.snackbarText = `internal server error`;
-					this.clearForm(false);
-					console.log(error);
-				});
-		},
+            this.snackbar = true;
+            this.snackbarText = `${res.data.message}`;
+            this.clearForm(res.data.success);
+          } else {
+            this.snackbar = true;
+            this.snackbarText = `${res.data.message}`;
+            this.clearForm(res.data.success);
+          }
+        })
+        .catch((error) => {
+          this.snackbar = true;
+          this.snackbarText = `internal server error`;
+          this.clearForm(false);
+          console.log(error);
+        });
+    },
 
-		validateUser() {
-			this.$v.$touch();
-			if (!this.$v.$invalid) {
-				this.login();
-			}
-		},
-	},
+    validateUser() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.login();
+      }
+    },
+  },
 
-	components: {
-		Title: fundooTitle,
-	},
+  components: {
+    Title: fundooTitle,
+  },
 };
 </script>
 
-<style lang = 'scss' scoped>
+<style scoped>
 @import url("../scss/login.scss");
 </style>
