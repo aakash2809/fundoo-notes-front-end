@@ -32,7 +32,7 @@ export default new Router({
 			component: ResetPassword
 		},
 		{
-			path: '/',
+			path: '/header',
 			name: 'Header',
 			component: Header
 		},
@@ -47,6 +47,11 @@ export default new Router({
 		{
 			path: '/note',
 			component: Note
+		},
+		{
+			path: '/',
+			name: Login,
+			component: Login
 		},
 
 	],
