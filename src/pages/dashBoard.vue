@@ -1,24 +1,42 @@
 <template>
   <div>
-    <div>
-      <Home v-bind:name="firstName" />
+    <div class="header">
+      <Header />
     </div>
-    <!--  <div>
-      <SideNav />
-    </div> -->
+    <v-row fullscreen>
+      <v-col cols="3">
+        <div class="side-nav pt-1">
+          <SideNav />
+        </div>
+      </v-col>
+      <v-col cols="9">
+        <v-col offset-md="2" cols="6"> <Note /> </v-col>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
-import Home from "../components/header.vue";
-//import SideNav from "../components/sideNav.vue";
+import Header from "../components/header.vue";
+import SideNav from "../components/sideNav.vue";
+import Note from "../components/note";
+
 export default {
   name: "dashBoard",
   components: {
-    Home,
-    //SideNav,
+    Header,
+    SideNav,
+    Note,
   },
-  data() {
-    return { firstName: `${localStorage.getItem("firstName")}` };
+  data() {},
+  methods: {
+    onClickOutSide() {
+      console.log("");
+    },
   },
 };
 </script>
+<style scoped>
+.side-nav {
+  height: 650px;
+}
+</style>
