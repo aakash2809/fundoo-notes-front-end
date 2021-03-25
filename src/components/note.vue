@@ -1,7 +1,12 @@
 <template>
   <div>
     <div>
-      <v-card class="mx-auto my-8 note-card window" elevation="9">
+      <v-card
+        class="mx-auto my-8 note-card window"
+        elevation="9"
+        v-click-outside="collapseCard"
+        @click="active = true"
+      >
         <div v-if="active">
           <v-toolbar flat>
             <v-text-field
@@ -53,7 +58,6 @@
               flat
               solo
               label="Take a Note..."
-              v-model="noteTitle"
             ></v-text-field>
             <v-spacer></v-spacer>
             <v-btn icon>
@@ -134,7 +138,7 @@ export default {
     noteTitle: "",
     description: "",
     noteData: [],
-    active: true,
+    active: false,
     isActivate: false,
   }),
 
@@ -144,18 +148,21 @@ export default {
       this.active = false;
     },
 
+    //clear input data
     clearNote() {
       this.noteTitle = "";
       this.description = "";
     },
 
+    //expand card
     expandCard() {
       this.active = true;
     },
+
     //add note
     takeNote() {
       this.active = false;
-      this.clearNote();
+
       this.sending = true;
       let data = {
         title: this.noteTitle,
@@ -169,15 +176,19 @@ export default {
           if (res.data.success) {
             console.log("if-response", res);
             this.clearNote();
+            this.collapseCard();
           } else {
             console.log("else-response", res);
+            this.collapseCard();
           }
         })
         .catch((error) => {
           console.log(error);
+          this.collapseCard();
         });
     },
 
+    //Get all notes from backend
     getAllNotes() {
       this.sending = true;
       console.log(" Users Notes: ");
