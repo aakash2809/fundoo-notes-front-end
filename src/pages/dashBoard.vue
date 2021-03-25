@@ -10,64 +10,70 @@
         </div>
       </v-col>
       <v-col cols="9">
-        <v-col offset-md="2" cols="6"> <Note /> </v-col>
-        <v-row cols="9">
+        <v-col offset-md="2" cols="7"> <Note /> </v-col>
+        <v-container
+          fluid
+          grid-list-md
+          v-if="isActivate"
+          class="notesContainer"
+        >
           <v-layout row wrap>
-            <v-flex class="mr-5, mb-3">
-              <div v-if="isActivate">
-                <div v-for="item in noteData" :key="item" link>
-                  <v-card
-                    class="mx-auto my-8 note-card window"
-                    elevation="8"
-                    cols="4"
+            <v-flex
+              d-flex
+              xs12
+              sm6
+              md4
+              v-for="item in noteData"
+              :key="item"
+              link
+            >
+              <v-card>
+                <v-toolbar flat>
+                  <v-text-field
+                    class="title-field pt-8"
+                    flat
+                    solo
+                    readonly
+                    v-model="item.title"
                   >
-                    <v-toolbar flat>
-                      <v-text-field
-                        justify="center"
-                        class="title-field pt-5"
-                        flat
-                        solo
-                        v-model="item.title"
-                      >
-                      </v-text-field>
-                      <v-spacer></v-spacer>
-                      <v-btn icon>
-                        <v-icon>mdi-pin-outline</v-icon>
-                      </v-btn>
-                    </v-toolbar>
-                    <v-text-field
-                      flat
-                      solo
-                      rounded
-                      v-model="item.description"
-                    ></v-text-field>
-                    <v-footer flat color="white">
-                      <v-btn icon>
-                        <v-icon>mdi-bell-plus-outline</v-icon>
-                      </v-btn>
-                      <v-btn icon>
-                        <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-                      </v-btn>
-                      <v-btn icon>
-                        <v-icon>mdi mdi-cookie-outline</v-icon>
-                      </v-btn>
-                      <v-btn icon>
-                        <v-icon>mdi mdi-image-outline</v-icon>
-                      </v-btn>
-                      <v-btn icon>
-                        <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
-                      </v-btn>
-                      <v-btn icon>
-                        <v-icon>mdi-dots-vertical</v-icon>
-                      </v-btn>
-                      <v-spacer></v-spacer>
-                    </v-footer>
-                  </v-card>
-                </div>
-              </div>
+                  </v-text-field>
+                  <v-spacer></v-spacer>
+                  <v-btn icon>
+                    <v-icon>mdi-pin-outline</v-icon>
+                  </v-btn>
+                </v-toolbar>
+                <v-text-field
+                  class="note-field pl-4"
+                  flat
+                  solo
+                  readonly
+                  v-model="item.description"
+                ></v-text-field>
+                <v-footer flat color="white">
+                  <v-btn icon>
+                    <v-icon>mdi-bell-plus-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-cookie-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-image-outline</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                </v-footer>
+              </v-card>
             </v-flex>
           </v-layout>
-        </v-row>
+        </v-container>
       </v-col>
     </v-row>
   </div>
@@ -110,6 +116,10 @@ export default {
 </script>
 <style scoped>
 .side-nav {
-  height: 650px;
+  height: 600px;
+}
+.notesContainer {
+  overflow-y: auto;
+  max-height: 400px;
 }
 </style>
