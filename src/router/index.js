@@ -14,6 +14,7 @@ Vue.use(Router);
 
 export default new Router({
 	routes: [
+
 		{
 			path: '/register',
 			component: SignUp
@@ -31,7 +32,7 @@ export default new Router({
 			path: '/resetPassword/:token',
 			component: ResetPassword
 		},
-		{
+		/* {
 			path: '/header',
 			name: 'Header',
 			component: Header
@@ -47,13 +48,31 @@ export default new Router({
 		{
 			path: '/note',
 			component: Note
-		},
+		}, */
 		{
 			path: '/',
 			name: Login,
 			component: Login
 		},
-
+		{
+			path: '/dashBoard',
+			component: DashBoard,
+			children: [
+				{
+					path: 'header',
+					name: 'Header',
+					component: Header
+				},
+				{
+					path: 'sideNav',
+					component: SideNav
+				},
+				{
+					path: 'note',
+					component: Note
+				}
+			]
+		}
 	],
 	mode: 'history'
 });
