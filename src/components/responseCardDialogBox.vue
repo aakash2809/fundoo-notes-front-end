@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD
   <v-container class="notesContainer">
-=======
-  <v-container fluid grid-list-md class="notesContainer">
->>>>>>> d8eeca13af86e8f9f748f79270c5f25d4522213d
     <v-layout row wrap>
       <v-flex>
         <v-card hover>
@@ -59,7 +55,12 @@
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
+                <v-btn
+                  icon
+                  v-bind="attrs"
+                  v-on="on"
+                  v-on:click="options = !options"
+                >
                   <v-icon>mdi-dots-vertical</v-icon>
                 </v-btn>
               </template>
@@ -68,6 +69,20 @@
             <v-spacer></v-spacer>
             <v-btn text v-on:click="update"> close </v-btn>
           </v-footer>
+          <v-list shaped v-if="options">
+            <v-list-item-group v-model="selectedItem" color="#e6b800">
+              <v-list-item
+                v-for="item in items"
+                :key="item.title"
+                link
+                @click="selectFucntion(item.title)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
         </v-card>
       </v-flex>
     </v-layout>
@@ -78,9 +93,22 @@ import { EventBus } from "@/event-bus";
 export default {
   data: () => ({
     active: false,
+    selectedItem: 0,
+    options: false,
+    items: [
+      { title: "Add Note" },
+      { title: "Delete Note" },
+      { title: "Edit Note" },
+    ],
   }),
 
   methods: {
+    selectFucntion(action) {
+      if (action == "Delete Note") {
+        EventBus.$emit("sideNavAction", action);
+      }
+    },
+
     displayDialogNote(action) {
       console.log("display method called in dialog component");
       this.active = action;
