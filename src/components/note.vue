@@ -2,7 +2,7 @@
   <div>
     <div>
       <v-card
-        class="mx-auto my-8 note-card window"
+        class="my-6 note-card"
         elevation="9"
         v-click-outside="collapseCard"
         @click="active = true"
@@ -20,10 +20,10 @@
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon>mdi-bell-plus-outline</v-icon>
+                  <v-icon>mdi-pin-outline</v-icon>
                 </v-btn>
               </template>
-              <span>Remind me</span>
+              <span>pin</span>
             </v-tooltip>
           </v-toolbar>
           <v-text-field
@@ -192,6 +192,7 @@ export default {
       userServices
         .fetchAllNotes()
         .then((res) => {
+          console.log("response1 : ", res);
           console.log("response : ", res.data.data);
           EventBus.$emit("all", res.data.data.reverse());
         })
