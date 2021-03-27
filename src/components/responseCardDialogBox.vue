@@ -61,6 +61,8 @@
               </template>
               <span>More</span>
             </v-tooltip>
+            <v-spacer></v-spacer>
+            <v-btn text v-on:click="update"> close </v-btn>
           </v-footer>
         </v-card>
       </v-flex>
