@@ -1,13 +1,4 @@
 <template>
-  <!--  <v-dialog max-width="600px"
-    >
-    <v-card>
-      <v-card-title>
-        <h1>fundoo card</h1>
-      </v-card-title>
-    </v-card>
-  </v-dialog> -->
-
   <v-container fluid grid-list-md class="notesContainer">
     <v-layout row wrap>
       <v-flex d-flex xs12 sm6 md4>
@@ -53,14 +44,6 @@
                 </v-btn>
               </template>
               <span>Colors</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon>mdi mdi-image-outline</v-icon>
-                </v-btn>
-              </template>
-              <span>Add image</span>
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">

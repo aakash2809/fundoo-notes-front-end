@@ -84,14 +84,6 @@
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn icon v-bind="attrs" v-on="on">
-                        <v-icon>mdi mdi-image-outline</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>Add image</span>
-                  </v-tooltip>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on">
                         <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
                       </v-btn>
                     </template>
