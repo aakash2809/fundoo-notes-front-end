@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <v-container class="notesContainer">
+=======
+  <v-container fluid grid-list-md class="notesContainer">
+>>>>>>> d8eeca13af86e8f9f748f79270c5f25d4522213d
     <v-layout row wrap>
       <v-flex>
         <v-card hover>
