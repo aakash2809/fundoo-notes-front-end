@@ -10,7 +10,9 @@
         </div>
       </v-col>
       <v-col cols="9">
-        <v-col offset-md="2" cols="7"> <Note /> </v-col>
+        <v-col offset-md="2" cols="7">
+          <Note />
+        </v-col>
         <v-container
           fluid
           grid-list-md
@@ -27,7 +29,7 @@
               :key="item"
               link
             >
-              <v-card>
+              <v-card hover @click.stop="active = true">
                 <v-toolbar flat>
                   <v-text-field
                     class="title-field pt-8"
@@ -108,6 +110,9 @@
             </v-flex>
           </v-layout>
         </v-container>
+        <v-dialog v-model="active" scrollable max-width="80%">
+          <PopUp
+        /></v-dialog>
       </v-col>
     </v-row>
   </div>
@@ -118,17 +123,21 @@ import Header from "../components/header.vue";
 import SideNav from "../components/sideNav.vue";
 import Note from "../components/note";
 import { EventBus } from "@/event-bus";
+import PopUp from "../components/responseCardDialogBox";
 
 export default {
   name: "dashBoard",
   data: () => ({
     noteData: [],
     isActivate: false,
+    active: false,
   }),
   components: {
     Header,
     SideNav,
     Note,
+
+    PopUp,
   },
 
   methods: {
@@ -137,6 +146,11 @@ export default {
       this.isActivate = true;
       console.log("dasboard data", this.noteData);
     },
+  },
+
+  openDialog() {
+    console.log("dialog dasboard");
+    EventBus.$emit("displayDialogNote", this.active);
   },
 
   mounted() {
