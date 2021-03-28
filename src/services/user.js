@@ -23,7 +23,15 @@ export default {
 
     fetchAllNotes() {
         return axios.get("/allNotes");
-    }
+    },
+
+    removeNote(noteId) {
+        return axios.delete(`/note/${noteId}`);
+    },
+
+    editNoteData(noteId, noteData) {
+        return axios.put(`/updateNote/${noteId}`, noteData);
+    },
 }
 
 

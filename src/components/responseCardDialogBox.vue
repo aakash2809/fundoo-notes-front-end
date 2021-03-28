@@ -5,7 +5,7 @@
         <v-card hover>
           <v-toolbar flat>
             <v-text-field class="title-field pt-8" flat solo
-              >title
+              >{{ dialogResponse }}
             </v-text-field>
             <v-spacer></v-spacer>
             <v-tooltip bottom>
@@ -67,10 +67,12 @@
               <span>More</span>
             </v-tooltip>
             <v-spacer></v-spacer>
-            <v-btn text v-on:click="update"> close </v-btn>
+            <v-btn text v-on:click="showCard = false"> close </v-btn>
           </v-footer>
-          <v-list shaped v-if="options">
-            <v-list-item-group v-model="selectedItem" color="#e6b800">
+        </v-card>
+        <v-card
+          ><v-list shaped v-if="options" dense>
+            <v-list-item-group v-model="selectedItem">
               <v-list-item
                 v-for="item in items"
                 :key="item.title"
@@ -82,8 +84,8 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
-          </v-list>
-        </v-card>
+          </v-list></v-card
+        >
       </v-flex>
     </v-layout>
   </v-container>
@@ -94,18 +96,21 @@ export default {
   data: () => ({
     active: false,
     selectedItem: 0,
+    showCard: true,
     options: false,
-    items: [
-      { title: "Add Note" },
-      { title: "Delete Note" },
-      { title: "Edit Note" },
-    ],
+    //title: "aakash",
+    items: [{ title: "UpDate Note" }, { title: "Delete Note" }],
   }),
-
+  props: ["dialogResponse"],
   methods: {
     selectFucntion(action) {
+      console.log("action", action);
       if (action == "Delete Note") {
-        EventBus.$emit("sideNavAction", action);
+        EventBus.$emit("deleteNote", action);
+      }
+      if (action == "UpDate Note") {
+        console.log("if update action", action);
+        EventBus.$emit("updateNote", action);
       }
     },
 

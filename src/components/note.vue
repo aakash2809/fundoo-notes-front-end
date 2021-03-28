@@ -174,6 +174,7 @@ export default {
             console.log("if-response", res);
             this.clearNote();
             this.collapseCard();
+            this.getAllNotes();
           } else {
             console.log("else-response", res);
             this.collapseCard();
@@ -194,7 +195,38 @@ export default {
         .then((res) => {
           console.log("response1 : ", res);
           console.log("response : ", res.data.data);
-          EventBus.$emit("all", res.data.data.reverse());
+          EventBus.$emit("allNotes", res.data.data.reverse());
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    deleteNote() {
+      let noteId = "435455654350986";
+      console.log("delete Note:");
+      userServices
+        .removeNote(noteId)
+        .then((res) => {
+          console.log("response1 : ", res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    updateNote() {
+      console.log("inside update Note:");
+      let noteId = "jgjhgy45";
+      let data = {
+        title: this.noteTitle,
+        description: this.description,
+      };
+
+      userServices
+        .editNoteData(noteId, data)
+        .then((res) => {
+          console.log("response1 : ", res);
         })
         .catch((error) => {
           console.log(error);
@@ -204,6 +236,8 @@ export default {
 
   mounted() {
     EventBus.$on("sideNavAction", this.getAllNotes);
+    EventBus.$on("deleteNote", this.deleteNote);
+    EventBus.$on("updateNote", this.updateNote);
   },
 };
 </script>
