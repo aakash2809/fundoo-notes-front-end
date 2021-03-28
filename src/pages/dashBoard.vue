@@ -119,16 +119,18 @@ import PopUp from "../components/responseCardDialogBox";
 
 export default {
   name: "dashBoard",
-  data: () => ({
-    noteData: [],
-    isActivate: false,
-    active: false,
-  }),
+  data() {
+    return {
+      noteData: [],
+      isActivate: false,
+      active: false,
+      // name: "raju",
+    };
+  },
   components: {
     Header,
     SideNav,
     Note,
-
     PopUp,
   },
 
@@ -146,16 +148,10 @@ export default {
   },
 
   mounted() {
-    EventBus.$on("all", this.allNotes);
+    EventBus.$on("allNotes", this.allNotes);
   },
 };
 </script>
 <style scoped>
-.side-nav {
-  height: 600px;
-}
-.notesContainer {
-  overflow-y: auto;
-  max-height: 400px;
-}
+@import url("../scss/dashBoard.scss");
 </style>
