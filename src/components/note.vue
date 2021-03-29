@@ -232,10 +232,16 @@ export default {
           console.log(error);
         });
     },
+
+    getTrashData() {
+      console.log("trash page");
+      EventBus.$emit("allTrashData", "Trash page");
+    },
   },
 
   mounted() {
-    EventBus.$on("sideNavAction", this.getAllNotes);
+    EventBus.$on("sideNavActionForNotes", this.getAllNotes);
+    EventBus.$on("sideNavActionForTrash", this.getTrashData);
     EventBus.$on("deleteNote", this.deleteNote);
     EventBus.$on("updateNote", this.updateNote);
   },

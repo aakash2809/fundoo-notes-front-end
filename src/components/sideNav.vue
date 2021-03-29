@@ -54,7 +54,10 @@ export default {
   methods: {
     selectFucntion(action) {
       if (action == "Notes") {
-        EventBus.$emit("sideNavAction", action);
+        EventBus.$emit("sideNavActionForNotes", action);
+      }
+      if (action == "Trash") {
+        EventBus.$emit("sideNavActionForTrash", action);
       }
     },
   },

@@ -140,6 +140,10 @@ export default {
       this.isActivate = true;
       console.log("dasboard data", this.noteData);
     },
+
+    allTrashNotes(tr) {
+      console.log("trash data:", tr);
+    },
   },
 
   openDialog() {
@@ -149,6 +153,7 @@ export default {
 
   mounted() {
     EventBus.$on("allNotes", this.allNotes);
+    EventBus.$on("allTrashData", this.allTrashNotes);
   },
 };
 </script>
