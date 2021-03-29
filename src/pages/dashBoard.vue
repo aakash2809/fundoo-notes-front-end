@@ -16,7 +16,7 @@
         <v-container
           fluid
           grid-list-md
-          v-if="isActivate"
+          v-if="isActivate && sideNavAction == 'Notes'"
           class="notesContainer"
         >
           <v-layout row wrap>
@@ -102,6 +102,16 @@
             </v-flex>
           </v-layout>
         </v-container>
+        <v-container grid-list-md v-if="isActivate && sideNavAction == 'Trash'">
+          <Trash />
+        </v-container>
+        <v-container
+          grid-list-md
+          v-if="isActivate && sideNavAction == 'Archive'"
+        >
+          <Archive />
+        </v-container>
+
         <v-dialog v-model="active" scrollable max-width="40%">
           <PopUp
         /></v-dialog>
@@ -115,8 +125,9 @@ import Header from "../components/header.vue";
 import SideNav from "../components/sideNav.vue";
 import Note from "../components/note";
 import { EventBus } from "@/event-bus";
-import PopUp from "../components/responseCardDialogBox";
-
+import PopUp from "../components/dialogBox";
+import Trash from "../components/trash.vue";
+import Archive from "../components/archive.vue";
 export default {
   name: "dashBoard",
   data() {
@@ -124,7 +135,7 @@ export default {
       noteData: [],
       isActivate: false,
       active: false,
-      // name: "raju",
+      sideNavAction: "",
     };
   },
   components: {
@@ -132,20 +143,28 @@ export default {
     SideNav,
     Note,
     PopUp,
+    Trash,
+    Archive,
   },
 
   methods: {
     allNotes(notes) {
+      this.sideNavAction = "Notes";
       this.noteData = notes;
       this.isActivate = true;
+
       console.log("dasboard data", this.noteData);
     },
 
-    allTrashNotes(trash) {
-      console.log("trash data:", trash);
+    allTrashNotes() {
+      this.sideNavAction = "Trash";
+      this.isActivate = true;
+      console.log("trash data:", this.sideNavAction);
     },
 
     archiveNoteData(archive) {
+      this.sideNavAction = "Archive";
+      this.isActivate = true;
       console.log("dashboard archive:", archive);
     },
   },
