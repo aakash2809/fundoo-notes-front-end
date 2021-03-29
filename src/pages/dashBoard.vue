@@ -141,8 +141,12 @@ export default {
       console.log("dasboard data", this.noteData);
     },
 
-    allTrashNotes(tr) {
-      console.log("trash data:", tr);
+    allTrashNotes(trash) {
+      console.log("trash data:", trash);
+    },
+
+    archiveNoteData(archive) {
+      console.log("dashboard archive:", archive);
     },
   },
 
@@ -154,6 +158,7 @@ export default {
   mounted() {
     EventBus.$on("allNotes", this.allNotes);
     EventBus.$on("allTrashData", this.allTrashNotes);
+    EventBus.$on("archiveData", this.archiveNoteData);
   },
 };
 </script>

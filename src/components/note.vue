@@ -237,11 +237,17 @@ export default {
       console.log("trash page");
       EventBus.$emit("allTrashData", "Trash page");
     },
+
+    archiveData() {
+      console.log("Archive");
+      EventBus.$emit("archiveData", "Archive page navigation");
+    },
   },
 
   mounted() {
     EventBus.$on("sideNavActionForNotes", this.getAllNotes);
     EventBus.$on("sideNavActionForTrash", this.getTrashData);
+    EventBus.$on("sideNavActionForArchive", this.archiveData);
     EventBus.$on("deleteNote", this.deleteNote);
     EventBus.$on("updateNote", this.updateNote);
   },
