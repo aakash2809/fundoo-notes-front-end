@@ -136,6 +136,7 @@ export default {
     noteTitle: "",
     description: "",
     noteData: [],
+
     active: false,
   }),
 
@@ -193,9 +194,12 @@ export default {
       userServices
         .fetchAllNotes()
         .then((res) => {
-          console.log("response1 : ", res);
-          console.log("response : ", res.data.data);
-          EventBus.$emit("allNotes", res.data.data.reverse());
+          console.log("response : ", res.data);
+          this.noteData = res.data.data.filter(
+            (note) => note.isDeleted == false && note.isArchived == false
+          );
+          console.log("node", this.noteData);
+          EventBus.$emit("allNotes", this.noteData.reverse());
         })
         .catch((error) => {
           console.log(error);
