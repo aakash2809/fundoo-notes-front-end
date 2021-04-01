@@ -29,7 +29,7 @@
               :key="item"
               link
             >
-              <v-card hover @click.stop="active = true">
+              <v-card hover v-on:click="openDialog()">
                 <v-toolbar flat>
                   <v-text-field
                     class="title-field pt-8"
@@ -111,10 +111,7 @@
         >
           <Archive />
         </v-container>
-
-        <v-dialog v-model="active" scrollable max-width="40%">
-          <PopUp
-        /></v-dialog>
+        <PopUp />
       </v-col>
     </v-row>
   </div>
@@ -130,6 +127,7 @@ import Trash from "../components/trash.vue";
 import Archive from "../components/archive.vue";
 export default {
   name: "dashBoard",
+
   data() {
     return {
       noteData: [],
@@ -138,6 +136,7 @@ export default {
       sideNavAction: "",
     };
   },
+
   components: {
     Header,
     SideNav,
@@ -152,26 +151,24 @@ export default {
       this.sideNavAction = "Notes";
       this.noteData = notes;
       this.isActivate = true;
-
       console.log("dasboard data", this.noteData);
     },
-
     allTrashNotes() {
       this.sideNavAction = "Trash";
       this.isActivate = true;
       console.log("trash data:", this.sideNavAction);
     },
-
     archiveNoteData(archive) {
       this.sideNavAction = "Archive";
       this.isActivate = true;
       console.log("dashboard archive:", archive);
     },
-  },
 
-  openDialog() {
-    console.log("dialog dasboard");
-    EventBus.$emit("displayDialogNote", this.active);
+    openDialog() {
+      console.log("dialog dasboard");
+      this.active = true;
+      EventBus.$emit("displayDialogNote", this.active);
+    },
   },
 
   mounted() {
