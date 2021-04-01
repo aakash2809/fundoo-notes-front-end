@@ -32,28 +32,12 @@ export default new Router({
 			path: '/resetPassword/:token',
 			component: ResetPassword
 		},
-		/* {
-			path: '/header',
-			name: 'Header',
-			component: Header
-		},
-		{
-			path: '/dashBoard',
-			component: DashBoard
-		},
-		{
-			path: '/sideNav',
-			component: SideNav
-		},
-		{
-			path: '/note',
-			component: Note
-		}, */
 		{
 			path: '/',
 			name: Login,
 			component: Login
 		},
+
 		{
 			path: '/dashBoard',
 			component: DashBoard,
@@ -72,7 +56,7 @@ export default new Router({
 					component: Note
 				}
 			]
-		}
+		},
 	],
 	mode: 'history'
 });
