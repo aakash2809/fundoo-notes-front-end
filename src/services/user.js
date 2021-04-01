@@ -32,6 +32,20 @@ export default {
     editNoteData(noteId, noteData) {
         return axios.put(`/updateNote/${noteId}`, noteData);
     },
+
+    deleteForever(noteId) {
+        const noteData = {
+            endPoint: '/notes/deleteforever/' + noteId
+        };
+        return axios.delete(noteData);
+    },
+    restoreNote(noteId, noteInput) {
+        const noteData = {
+            userInput: noteInput,
+            endPoint: '/note/restore/' + noteId
+        };
+        return axios.put(noteData);
+    },
 }
 
 
