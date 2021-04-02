@@ -26,8 +26,7 @@
               sm6
               md4
               v-for="item in noteData"
-              :key="item"
-              link
+              v-bind:key="item._id"
             >
               <v-card hover v-on:click="openDialog()">
                 <v-toolbar flat>
@@ -36,8 +35,9 @@
                     flat
                     solo
                     readonly
+                    @click.stop="item.active = true"
                     v-model="item.title"
-                  >
+                    >{{ item.title }}
                   </v-text-field>
                   <v-spacer></v-spacer>
                   <v-tooltip bottom>
@@ -54,8 +54,10 @@
                   flat
                   solo
                   readonly
+                  @click.stop="item.active = true"
                   v-model="item.description"
-                ></v-text-field>
+                  >{{ item.description }}</v-text-field
+                >
                 <v-footer flat color="white">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -98,6 +100,7 @@
                     <span>More</span>
                   </v-tooltip>
                 </v-footer>
+                <PopUp @click.stop="item.active = true" :data="item" />
               </v-card>
             </v-flex>
           </v-layout>
@@ -111,7 +114,6 @@
         >
           <Archive />
         </v-container>
-        <PopUp />
       </v-col>
     </v-row>
   </div>

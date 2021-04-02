@@ -1,12 +1,28 @@
 <template>
   <v-container class="notesContainer">
     <v-layout row wrap>
-      <v-dialog v-model="active" scrollable max-width="40%">
+      <v-dialog
+        v-model="active"
+        persistent
+        scrollable
+        max-width="400"
+        min-height="200"
+      >
         <v-flex>
-          <v-card hover @click="active = true">
+          <v-card hover>
             <v-toolbar flat>
-              <v-text-field class="title-field pt-8" flat solo
-                >{{ dialogResponse }}
+              <v-text-field
+                solo
+                label="id"
+                v-model="editOptions._id"
+                v-show="true"
+              ></v-text-field>
+              <v-text-field
+                class="title-field pt-8"
+                flat
+                solo
+                v-model="editOptions.title"
+              >
               </v-text-field>
               <v-spacer></v-spacer>
               <v-tooltip bottom>
@@ -18,9 +34,12 @@
                 <span>pin note</span>
               </v-tooltip>
             </v-toolbar>
-            <v-text-field class="note-field pl-4" flat solo
-              >took note</v-text-field
-            >
+            <v-text-field
+              class="note-field pl-4"
+              flat
+              solo
+              v-model="editOptions.description"
+            ></v-text-field>
             <v-footer flat color="white">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -94,36 +113,82 @@
 </template>
 <script>
 import { EventBus } from "@/event-bus";
+import userServices from "../services/user";
+
 export default {
-  data: () => ({
-    active: false,
-    selectedItem: 0,
-    //showCard: true,
-    options: false,
-    items: [{ title: "UpDate Note" }, { title: "Delete Note" }],
-  }),
-  props: ["dialogResponse"],
+  props: {
+    data: Object,
+  },
+
+  data() {
+    return {
+      active: false,
+      selectedItem: 0,
+      options: false,
+      items: [{ title: "UpDate Note" }, { title: "Delete Note" }],
+      editOptions: [],
+    };
+  },
+
   methods: {
     selectFucntion(action) {
-      console.log("action", action);
+      //  let input = { action: action, id: id };
+      console.log();
       if (action == "Delete Note") {
-        EventBus.$emit("deleteNote", action);
+        this.deleteNote();
+        // EventBus.$emit("deleteNote", action);
       }
       if (action == "UpDate Note") {
-        console.log("if update action", action);
-        EventBus.$emit("updateNote", action);
+        //EventBus.$emit("updateNote", action);
+        this.updateNote();
       }
     },
+
     close() {
       this.active = false;
     },
+
     displayDialogNote(action) {
-      console.log("dsf", action);
       this.active = action;
     },
+
+    deleteNote() {
+      let noteId = this.editOptions._id;
+      console.log("delete Note:");
+      userServices
+        .removeNote(noteId)
+        .then((res) => {
+          console.log("response1 : ", res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    updateNote() {
+      console.log("inside update Note:");
+      let noteId = this.editOptions._id;
+      let data = {
+        title: this.noteTitle,
+        description: this.description,
+      };
+
+      userServices
+        .editNoteData(noteId, data)
+        .then((res) => {
+          console.log("data to update : ", noteId);
+          console.log("response1 : ", res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
+
   mounted() {
     EventBus.$on("displayDialogNote", this.displayDialogNote);
+    this.editOptions = this.data;
+    console.log("data from dashboard", this.editOptions);
   },
 };
 </script>

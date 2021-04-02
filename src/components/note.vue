@@ -130,6 +130,7 @@
 <script>
 import userServices from "../services/user";
 import { EventBus } from "@/event-bus";
+//import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Note",
   data: () => ({
@@ -140,6 +141,19 @@ export default {
     active: false,
   }),
 
+  /* methods: {
+    ...mapActions(["getAllNotes"]),
+  },
+
+  created() {
+    this.getAllNotes();
+  },
+
+  computed: {
+    ...mapGetters(["allActiveNotes"]),
+  },
+};
+ */
   methods: {
     //collapseCard
     collapseCard() {
@@ -206,8 +220,8 @@ export default {
         });
     },
 
-    deleteNote() {
-      let noteId = "435455654350986";
+    /* deleteNote() {
+      let noteId = "dfgsdfgdf";
       console.log("delete Note:");
       userServices
         .removeNote(noteId)
@@ -217,11 +231,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
+    }, */
 
-    updateNote() {
+    /*  updateNote() {
       console.log("inside update Note:");
-      let noteId = "jgjhgy45";
+      let noteId = "dsfsd546";
       let data = {
         title: this.noteTitle,
         description: this.description,
@@ -235,7 +249,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
+    }, */
 
     getTrashData() {
       console.log("trash page");
@@ -252,8 +266,8 @@ export default {
     EventBus.$on("sideNavActionForNotes", this.getAllNotes);
     EventBus.$on("sideNavActionForTrash", this.getTrashData);
     EventBus.$on("sideNavActionForArchive", this.archiveData);
-    EventBus.$on("deleteNote", this.deleteNote);
-    EventBus.$on("updateNote", this.updateNote);
+    //EventBus.$on("deleteNote", this.deleteNote);
+    //EventBus.$on("updateNote", this.updateNote);
   },
 };
 </script>
