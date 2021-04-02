@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-15">
     <form novalidate class="md-layout jc-center" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-30 md-small-size-100">
         <div class="md-layout md-gutter">
@@ -67,7 +67,7 @@
                     >
                   </span>
                 </div>
-                <md-button type="submit" class="md-primary md-raised"
+                <md-button type="submit" class="md-primary md-raised" id="login"
                   >Login</md-button
                 >
               </md-card-actions>
