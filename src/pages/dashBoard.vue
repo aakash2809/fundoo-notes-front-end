@@ -10,7 +10,7 @@
         </div>
       </v-col>
       <v-col cols="9">
-        <v-col offset-md="2" cols="7">
+        <v-col offset-md="2" cols="7" v-if="showNoteCard">
           <Note />
         </v-col>
         <v-container
@@ -136,6 +136,7 @@ export default {
       isActivate: false,
       active: false,
       sideNavAction: "",
+      showNoteCard: true,
     };
   },
 
@@ -150,17 +151,21 @@ export default {
 
   methods: {
     allNotes(notes) {
-      this.sideNavAction = "Notes";
+      (this.showNoteCard = true), (this.sideNavAction = "Notes");
       this.noteData = notes;
       this.isActivate = true;
       console.log("dasboard data", this.noteData);
     },
+
     allTrashNotes() {
+      this.showNoteCard = false;
       this.sideNavAction = "Trash";
       this.isActivate = true;
       console.log("trash data:", this.sideNavAction);
     },
+
     archiveNoteData(archive) {
+      this.showNoteCard = false;
       this.sideNavAction = "Archive";
       this.isActivate = true;
       console.log("dashboard archive:", archive);
