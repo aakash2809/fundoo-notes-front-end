@@ -23,7 +23,7 @@
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn icon v-bind="attrs" v-on="on">
-                      <article class="text-md-left text-lg-left pl-10">
+                      <article class="text-md-left text-lg-left">
                         <v-icon @click="restoreNote(note._id)"
                           >mdi-restore</v-icon
                         >
@@ -35,7 +35,7 @@
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn icon v-bind="attrs" v-on="on">
-                      <article class="text-md-left text-lg-left pl-8">
+                      <article class="text-md-left text-lg-left">
                         <v-icon @click="note.dialog = true"
                           >mdi-delete-outline</v-icon
                         >
@@ -90,12 +90,12 @@ export default {
     },
 
     restoreNote(noteId) {
-      const noteInput = {
-        isDeleted: false,
-      };
+      console.log("restore clicked");
+      console.log("noteId", noteId);
       note
-        .restoreNote(noteId, noteInput)
+        .restoreNote(noteId)
         .then((data) => {
+          console.log("response", data);
           if (data.data.status_code.status_code == 200) {
             console.log(data.data);
             const snackbarData = {
