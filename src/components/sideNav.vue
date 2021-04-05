@@ -18,6 +18,7 @@
           v-for="item in items"
           :key="item.title"
           link
+          id="side-nav-option"
           @click="selectFucntion(item.title)"
         >
           <v-list-item-icon>
