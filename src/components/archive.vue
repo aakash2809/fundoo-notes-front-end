@@ -20,9 +20,14 @@
             </article>
             <v-card-title>{{ note.title }} </v-card-title>
             <v-list-item>{{ note.description }}</v-list-item>
-            <v-list-item></v-list-item>
-            <cardIcons v-show="hover == true || click == true" />
-            <v-list-item></v-list-item>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi-download-outline mdi-rotate-180"</v-icon>
+                </v-btn>
+              </template>
+              <span>unArchive</span>
+            </v-tooltip>
           </v-card>
         </v-hover>
       </v-flex>
