@@ -46,7 +46,6 @@
                 </v-tooltip>
               </v-row>
             </v-list-item>
-            <v-list-item></v-list-item>
           </v-card>
         </v-hover>
       </v-flex>
