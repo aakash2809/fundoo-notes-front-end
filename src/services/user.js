@@ -41,8 +41,11 @@ export default {
     },
 
     restoreNote(noteId) {
-        console.log("AXIOS CALL", noteId);
         return axios.put(`/notes/restore/${noteId}`);
+    },
+
+    unArchieveNote(noteId) {
+        return axios.put(`/notes/unarchive/${noteId}`);
     },
 }
 

@@ -22,7 +22,12 @@
             <v-list-item>{{ note.description }}</v-list-item>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
+                <v-btn
+                  icon
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="unArchieve(note._id)"
+                >
                   <v-icon>mdi-download-outline mdi-rotate-180"</v-icon>
                 </v-btn>
               </template>
@@ -71,6 +76,16 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    unArchieve(noteId) {
+      console.log("unarcheved id", noteId);
+      userServices
+        .unArchieveNote(noteId)
+        .then(() => {
+          this.displayAllNotes();
+        })
+        .catch();
     },
   },
 };
