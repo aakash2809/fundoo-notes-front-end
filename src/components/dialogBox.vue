@@ -153,13 +153,31 @@ export default {
       this.active = action;
     },
 
+    getAllNotes() {
+      this.sending = true;
+      console.log(" Users Notes: ");
+      userServices
+        .fetchAllNotes()
+        .then((res) => {
+          console.log("response : ", res.data);
+          this.noteData = res.data.data.filter(
+            (note) => note.isDeleted == false && note.isArchived == false
+          );
+          console.log("node", this.noteData);
+          EventBus.$emit("allNotes", this.noteData.reverse());
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     deleteNote() {
       let noteId = this.editOptions._id;
-      console.log("delete Note:");
       userServices
         .removeNote(noteId)
         .then((res) => {
-          console.log("response1 : ", res);
+          console.log("delete response : ", res);
+          this.getAllNotes();
         })
         .catch((error) => {
           console.log(error);
@@ -167,18 +185,17 @@ export default {
     },
 
     updateNote() {
-      console.log("inside update Note:");
       let noteId = this.editOptions._id;
       let data = {
-        title: this.noteTitle,
-        description: this.description,
+        title: this.editOptions.title,
+        description: this.editOptions.description,
       };
-      console.log("update called");
+      console.log("update htt called", data);
       userServices
         .editNoteData(noteId, data)
         .then((res) => {
-          console.log("data to update : ", noteId);
-          console.log("response1 : ", res);
+          console.log("update response:", res);
+          this.getAllNotes();
         })
         .catch((error) => {
           console.log(error);
@@ -188,8 +205,6 @@ export default {
 
   mounted() {
     EventBus.$on("displayDialogNote", this.displayDialogNote);
-    this.editOptions = this.data;
-    console.log("data from dashboard", this.editOptions);
   },
 };
 </script>
