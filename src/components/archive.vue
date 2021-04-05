@@ -80,12 +80,9 @@ export default {
 
     unArchieve(noteId) {
       console.log("unarcheved id", noteId);
-      userServices
-        .unArchieveNote(noteId)
-        .then(() => {
-          this.displayAllNotes();
-        })
-        .catch();
+      userServices.unArchieveNote(noteId).then(() => {
+        this.displayAllNotes();
+      });
     },
   },
 };
