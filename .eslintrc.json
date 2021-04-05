@@ -18,7 +18,7 @@
         "vue"
     ],
     "rules": {
-        /*   "quotes": [
+        "quotes": [
             "error",
             "single"
         ],
@@ -35,7 +35,7 @@
             }
         ],
         "template-curly-spacing": "off",
-        "indent": "off" */
+        "indent": "off"
     },
     "ignorePatterns": [
         "./node_modules/",
