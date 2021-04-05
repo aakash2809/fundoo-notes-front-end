@@ -41,6 +41,7 @@ export default {
   data: () => ({
     selectedItem: 0,
     drawer: true,
+
     items: [
       { title: "Notes", icon: "mdi mdi-lightbulb-outline" },
       { title: "Reminder", icon: "mdi mdi-bell-outline" },
