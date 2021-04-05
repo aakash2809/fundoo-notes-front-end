@@ -3,6 +3,7 @@
     <div>
       <v-card
         class="my-6 note-card"
+        id="noteCard"
         elevation="9"
         v-click-outside="collapseCard"
         @click="active = true"
@@ -11,6 +12,7 @@
           <v-toolbar flat>
             <v-text-field
               class="note-title pt-5"
+              name="note-title"
               flat
               solo
               label="Title"
@@ -28,6 +30,7 @@
           </v-toolbar>
           <v-text-field
             class="note pl-4"
+            name="note-description"
             v-model="description"
             flat
             solo
@@ -83,7 +86,7 @@
               <span>More</span>
             </v-tooltip>
             <v-spacer></v-spacer>
-            <v-btn text v-on:click="takeNote"> close </v-btn>
+            <v-btn id="close-card" text v-on:click="takeNote"> close </v-btn>
           </v-footer>
         </div>
         <div v-if="!active">
@@ -219,37 +222,6 @@ export default {
           console.log(error);
         });
     },
-
-    /* deleteNote() {
-      let noteId = "dfgsdfgdf";
-      console.log("delete Note:");
-      userServices
-        .removeNote(noteId)
-        .then((res) => {
-          console.log("response1 : ", res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }, */
-
-    /*  updateNote() {
-      console.log("inside update Note:");
-      let noteId = "dsfsd546";
-      let data = {
-        title: this.noteTitle,
-        description: this.description,
-      };
-
-      userServices
-        .editNoteData(noteId, data)
-        .then((res) => {
-          console.log("response1 : ", res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }, */
 
     getTrashData() {
       console.log("trash page");
