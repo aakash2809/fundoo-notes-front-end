@@ -90,22 +90,19 @@ export default {
     },
 
     restoreNote(noteId) {
-      console.log("restore clicked");
-      console.log("noteId", noteId);
       note
         .restoreNote(noteId)
         .then((data) => {
           console.log("response", data);
-          if (data.data.status_code.status_code == 200) {
+          if (data.data.status_code == 200) {
             console.log(data.data);
-            const snackbarData = {
+            /* onst snackbarData = {
               text: "Note moved to trash",
               timeout: 2500,
-            };
-            this.displayAllNotes();
-            console.log(this.snackbarData);
-            this.$refs.snackbar.activateSnackbar(snackbarData);
+            }; */
 
+            console.log(this.snackbarData);
+            //this.$refs.snackbar.activateSnackbar(snackbarData);
             this.displayAllNotes();
           }
         })

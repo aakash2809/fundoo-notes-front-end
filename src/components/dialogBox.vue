@@ -140,6 +140,7 @@ export default {
       }
       if (action == "UpDate Note") {
         //EventBus.$emit("updateNote", action);
+        console.log("action:", action);
         this.updateNote();
       }
     },
@@ -172,7 +173,7 @@ export default {
         title: this.noteTitle,
         description: this.description,
       };
-
+      console.log("update called");
       userServices
         .editNoteData(noteId, data)
         .then((res) => {
