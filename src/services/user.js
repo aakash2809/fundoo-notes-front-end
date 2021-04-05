@@ -39,12 +39,10 @@ export default {
         };
         return axios.delete(noteData);
     },
-    restoreNote(noteId, noteInput) {
-        const noteData = {
-            userInput: noteInput,
-            endPoint: '/note/restore/' + noteId
-        };
-        return axios.put(noteData);
+
+    restoreNote(noteId) {
+        console.log("AXIOS CALL", noteId);
+        return axios.put(`/notes/restore/${noteId}`);
     },
 }
 
