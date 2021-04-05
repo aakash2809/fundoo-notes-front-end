@@ -33,19 +33,16 @@ export default {
         return axios.put(`/updateNote/${noteId}`, noteData);
     },
 
-    deleteForever(noteId) {
-        const noteData = {
-            endPoint: '/notes/deleteforever/' + noteId
-        };
-        return axios.delete(noteData);
-    },
-
     restoreNote(noteId) {
         return axios.put(`/notes/restore/${noteId}`);
     },
 
     unArchieveNote(noteId) {
         return axios.put(`/notes/unarchive/${noteId}`);
+    },
+
+    deleteNoteForever(noteId) {
+        return axios.delete(`/notes/deleteforever/${noteId}`);
     },
 }
 

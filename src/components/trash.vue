@@ -36,7 +36,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn icon v-bind="attrs" v-on="on">
                       <article class="text-md-left text-lg-left">
-                        <v-icon @click="note.dialog = true"
+                        <v-icon @click="deleteForever(note._id)"
                           >mdi-delete-outline</v-icon
                         >
                       </article>
@@ -96,17 +96,22 @@ export default {
           console.log("response", data);
           if (data.data.status_code == 200) {
             console.log(data.data);
-            /* onst snackbarData = {
-              text: "Note moved to trash",
-              timeout: 2500,
-            }; */
-
             console.log(this.snackbarData);
-            //this.$refs.snackbar.activateSnackbar(snackbarData);
             this.displayAllNotes();
           }
         })
-        .catch();
+        .catch(() => {});
+    },
+
+    deleteForever(noteId) {
+      console.log("deleteNoteId: ", noteId);
+      note
+        .deleteNoteForever(noteId)
+        .then((response) => {
+          console.log("response", response);
+          this.displayAllNotes();
+        })
+        .catch(() => {});
     },
   },
 };
