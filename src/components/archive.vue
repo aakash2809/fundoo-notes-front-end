@@ -28,7 +28,7 @@
                   v-on="on"
                   @click="unArchieve(note._id)"
                 >
-                  <v-icon>mdi-download-outline mdi-rotate-180"</v-icon>
+                  <v-icon>mdi mdi-exit-to-app mdi-rotate-270</v-icon>
                 </v-btn>
               </template>
               <span>unArchive</span>

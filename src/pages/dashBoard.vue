@@ -58,7 +58,7 @@
                   v-model="item.description"
                   >{{ item.description }}</v-text-field
                 >
-                <v-footer flat color="white">
+                <v-footer flat color="white" class="pl-14">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn icon v-bind="attrs" v-on="on">
