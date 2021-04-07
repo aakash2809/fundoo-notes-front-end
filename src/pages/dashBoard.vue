@@ -28,7 +28,7 @@
               v-for="item in noteData"
               v-bind:key="item._id"
             >
-              <v-card hover v-on:click="openDialog()">
+              <v-card outlined v-on:click="openDialog()">
                 <v-toolbar flat>
                   <v-text-field
                     class="title-field pt-8"
@@ -50,7 +50,7 @@
                   </v-tooltip>
                 </v-toolbar>
                 <v-text-field
-                  class="note-field pl-4"
+                  class="v-list pl-4"
                   flat
                   solo
                   readonly
@@ -58,7 +58,7 @@
                   v-model="item.description"
                   >{{ item.description }}</v-text-field
                 >
-                <v-footer flat color="white" class="pl-14">
+                <v-footer flat color="white">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn icon v-bind="attrs" v-on="on">
@@ -69,7 +69,7 @@
                   </v-tooltip>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on">
+                      <v-btn icon v-bind="attrs" v-on="on" class="mx-3">
                         <v-icon>mdi mdi-account-plus-outline</v-icon>
                       </v-btn>
                     </template>
@@ -77,7 +77,7 @@
                   </v-tooltip>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on">
+                      <v-btn icon v-bind="attrs" v-on="on" class="mx-3">
                         <v-icon>mdi mdi-cookie-outline</v-icon>
                       </v-btn>
                     </template>
@@ -85,7 +85,7 @@
                   </v-tooltip>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on">
+                      <v-btn icon v-bind="attrs" v-on="on" class="mx-3">
                         <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
                       </v-btn>
                     </template>
@@ -93,13 +93,37 @@
                   </v-tooltip>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on">
+                      <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        v-on:click="options = !options"
+                        class="mx-3"
+                      >
                         <v-icon>mdi-dots-vertical</v-icon>
                       </v-btn>
                     </template>
                     <span>More</span>
                   </v-tooltip>
                 </v-footer>
+                <v-card
+                  ><v-list shaped v-if="options" dense>
+                    <v-list-item-group v-model="selectedItem">
+                      <v-list-item
+                        v-for="option in items"
+                        :key="option.title"
+                        link
+                        @click="selectFucntion(option.title)"
+                      >
+                        <v-list-item-content>
+                          <v-list-item-title>{{
+                            option.title
+                          }}</v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list-item-group>
+                  </v-list></v-card
+                >
                 <PopUp @click.stop="item.active = true" :data="item" />
               </v-card>
             </v-flex>
@@ -127,6 +151,7 @@ import { EventBus } from "@/event-bus";
 import PopUp from "../components/dialogBox";
 import Trash from "../components/trash.vue";
 import Archive from "../components/archive.vue";
+import userServices from "../services/user";
 export default {
   name: "dashBoard",
 
@@ -137,6 +162,8 @@ export default {
       active: false,
       sideNavAction: "",
       showNoteCard: true,
+      options: false,
+      items: [{ title: "Delete Note" }],
     };
   },
 
@@ -150,29 +177,58 @@ export default {
   },
 
   methods: {
+    selectFucntion(action) {
+      if (action == "Delete Note") {
+        this.deleteNote();
+      }
+    },
+
+    deleteNote() {
+      let noteId = this.noteData._id;
+      console.log(this.noteData._id);
+      userServices
+        .removeNote(noteId)
+        .then(() => {
+          this.getAllNotes();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    getAllNotes() {
+      this.sending = true;
+      console.log(" Users Notes: ");
+      userServices
+        .fetchAllNotes()
+        .then((res) => {
+          this.noteData = res.data.data.filter(
+            (note) => note.isDeleted == false && note.isArchived == false
+          );
+          EventBus.$emit("allNotes", this.noteData.reverse());
+        })
+        .catch(() => {});
+    },
+
     allNotes(notes) {
       (this.showNoteCard = true), (this.sideNavAction = "Notes");
       this.noteData = notes;
       this.isActivate = true;
-      console.log("dasboard data", this.noteData);
     },
 
     allTrashNotes() {
       this.showNoteCard = false;
       this.sideNavAction = "Trash";
       this.isActivate = true;
-      console.log("trash data:", this.sideNavAction);
     },
 
-    archiveNoteData(archive) {
+    archiveNoteData() {
       this.showNoteCard = false;
       this.sideNavAction = "Archive";
       this.isActivate = true;
-      console.log("dashboard archive:", archive);
     },
 
     openDialog() {
-      console.log("dialog dasboard");
       this.active = true;
       EventBus.$emit("displayDialogNote", this.active);
     },
