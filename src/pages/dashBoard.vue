@@ -27,16 +27,18 @@
               md4
               v-for="item in noteData"
               v-bind:key="item._id"
+              link
             >
-              <v-card outlined v-on:click="openDialog()">
+              <v-card outlined>
                 <v-toolbar flat>
                   <v-text-field
-                    class="title-field pt-8"
+                    class="mx-auto v-list pt-8"
                     flat
                     solo
                     readonly
                     @click.stop="item.active = true"
                     v-model="item.title"
+                    v-on:click="openDialog()"
                     >{{ item.title }}
                   </v-text-field>
                   <v-spacer></v-spacer>
@@ -50,14 +52,14 @@
                   </v-tooltip>
                 </v-toolbar>
                 <v-text-field
-                  class="v-list pl-4"
+                  class="pl-4"
                   flat
                   solo
                   readonly
                   @click.stop="item.active = true"
                   v-model="item.description"
-                  >{{ item.description }}</v-text-field
-                >
+                  v-on:click="openDialog()"
+                ></v-text-field>
                 <v-footer flat color="white">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -113,7 +115,7 @@
                         v-for="option in items"
                         :key="option.title"
                         link
-                        @click="selectFucntion(option.title)"
+                        @click="selectFucntion(option.title, item._id)"
                       >
                         <v-list-item-content>
                           <v-list-item-title>{{
@@ -177,15 +179,13 @@ export default {
   },
 
   methods: {
-    selectFucntion(action) {
+    selectFucntion(action, id) {
       if (action == "Delete Note") {
-        this.deleteNote();
+        this.deleteNote(id);
       }
     },
 
-    deleteNote() {
-      let noteId = this.noteData._id;
-      console.log(this.noteData._id);
+    deleteNote(noteId) {
       userServices
         .removeNote(noteId)
         .then(() => {
