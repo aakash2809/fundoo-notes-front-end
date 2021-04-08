@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-15">
     <form novalidate class="md-layout jc-center" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-30 md-small-size-100">
         <div class="md-layout md-gutter">
@@ -34,7 +34,10 @@
 
             <md-card-content>
               <md-card-actions>
-                <md-button type="submit" class="md-primary md-raised"
+                <md-button
+                  type="submit"
+                  class="md-primary md-raised"
+                  id="send-mail"
                   >Next</md-button
                 >
               </md-card-actions>
@@ -60,73 +63,73 @@ import Title from "../components/fundooTitle";
 import userServices from "../services/user";
 
 export default {
-	name: "forgetPassword",
-	mixins: [validationMixin],
-	data: () => ({
-		form: {
-			email: null,
-		},
-		snackbar: false,
-		snackbarText: "",
-		sending: false,
-	}),
-	validations: {
-		form: {
-			email: {
-				required,
-				email,
-			},
-		},
-	},
+  name: "forgetPassword",
+  mixins: [validationMixin],
+  data: () => ({
+    form: {
+      email: null,
+    },
+    snackbar: false,
+    snackbarText: "",
+    sending: false,
+  }),
+  validations: {
+    form: {
+      email: {
+        required,
+        email,
+      },
+    },
+  },
 
-	methods: {
-		getValidationClass(fieldName) {
-			const field = this.$v.form[fieldName];
-			if (field) {
-				return {
-					"md-invalid": field.$invalid && field.$dirty,
-				};
-			}
-		},
+  methods: {
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty,
+        };
+      }
+    },
 
-		clearForm() {
-			this.$v.$reset();
-			this.form.email = null;
-			router.push({ path: "/forgotPassword" });
-		},
+    clearForm() {
+      this.$v.$reset();
+      this.form.email = null;
+      router.push({ path: "/forgotPassword" });
+    },
 
-		forgotPassword() {
-			this.sending = true;
-			let data = {
-				email: this.form.email,
-			};
-			userServices
-				.forgotPassword(data)
-				.then((res) => {
-					console.log("response");
-					this.snackbar = true;
-					this.snackbarText = `${res.data.message}`;
-					localStorage.setItem("token", this.$route.params.token);
-					this.clearForm();
-				})
-				.catch((error) => {
-					this.snackbar = true;
-					this.snackbarText = `internal server error`;
-					console.log(error);
-				});
-		},
+    forgotPassword() {
+      this.sending = true;
+      let data = {
+        email: this.form.email,
+      };
+      userServices
+        .forgotPassword(data)
+        .then((res) => {
+          console.log("response");
+          this.snackbar = true;
+          this.snackbarText = `${res.data.message}`;
+          localStorage.setItem("token", this.$route.params.token);
+          this.clearForm();
+        })
+        .catch((error) => {
+          this.snackbar = true;
+          this.snackbarText = `internal server error`;
+          console.log(error);
+        });
+    },
 
-		validateUser() {
-			this.$v.$touch();
-			if (!this.$v.$invalid) {
-				this.forgotPassword();
-			}
-		},
-	},
+    validateUser() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.forgotPassword();
+      }
+    },
+  },
 
-	components: {
-		Title,
-	},
+  components: {
+    Title,
+  },
 };
 </script>
 

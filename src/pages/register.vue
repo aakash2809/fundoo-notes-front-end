@@ -125,7 +125,10 @@
             <md-card-content>
               <md-card-actions>
                 <span>
-                  <router-link to="/loginUser" class="route-link"
+                  <router-link
+                    to="/loginUser"
+                    class="route-link"
+                    id="move-to-login"
                     >sign in instead</router-link
                   >
                 </span>

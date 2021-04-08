@@ -56,13 +56,19 @@
             <md-card-content>
               <md-card-actions>
                 <span>
-                  <router-link to="/forgotPassword" class="route-link1"
+                  <router-link
+                    to="/forgotPassword"
+                    class="route-link1"
+                    id="move-to-forgotPassword"
                     >forgot password ?</router-link
                   >
                 </span>
                 <div>
                   <span>
-                    <router-link to="/register" class="route-link"
+                    <router-link
+                      to="/register"
+                      class="route-link"
+                      id="move-to-register"
                       >register instead</router-link
                     >
                   </span>
@@ -124,6 +130,7 @@ export default {
       },
     },
   },
+
   methods: {
     getValidationClass(fieldName) {
       const field = this.$v.form[fieldName];
