@@ -25,7 +25,7 @@
                     <v-btn icon v-bind="attrs" v-on="on">
                       <article class="text-md-left text-lg-left">
                         <v-icon @click="restoreNote(note._id)"
-                          >mdi-restore</v-icon
+                          >mdi mdi-delete-restore</v-icon
                         >
                       </article>
                     </v-btn>
@@ -37,7 +37,7 @@
                     <v-btn icon v-bind="attrs" v-on="on">
                       <article class="text-md-left text-lg-left">
                         <v-icon @click="deleteForever(note._id)"
-                          >mdi-delete-outline</v-icon
+                          >mdi mdi-delete-forever</v-icon
                         >
                       </article>
                     </v-btn>
