@@ -29,7 +29,7 @@
               v-bind:key="item._id"
               link
             >
-              <v-card outlined>
+              <v-card class="pt-8">
                 <v-toolbar flat>
                   <v-text-field
                     class="mx-auto v-list pt-8"
