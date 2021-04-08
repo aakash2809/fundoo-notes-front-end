@@ -87,7 +87,13 @@
                   </v-tooltip>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on" class="mx-3">
+                      <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="archiveNote(item._id)"
+                        class="mx-3"
+                      >
                         <v-icon>mdi mdi-exit-to-app mdi-rotate-90</v-icon>
                       </v-btn>
                     </template>
@@ -183,6 +189,18 @@ export default {
       if (action == "Delete Note") {
         this.deleteNote(id);
       }
+    },
+
+    archiveNote(noteId) {
+      console.log("ARCHIVE", noteId);
+      userServices
+        .archiveNoteData(noteId)
+        .then(() => {
+          this.getAllNotes();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     deleteNote(noteId) {

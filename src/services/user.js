@@ -26,7 +26,7 @@ export default {
     },
 
     removeNote(noteId) {
-        return axios.delete(`/note/${noteId}`);
+        return axios.put(`/notes/delete/${noteId}`);
     },
 
     editNoteData(noteId, noteData) {
@@ -43,6 +43,10 @@ export default {
 
     deleteNoteForever(noteId) {
         return axios.delete(`/notes/deleteforever/${noteId}`);
+    },
+
+    archiveNoteData(noteId) {
+        return axios.put(`/notes/archive/${noteId}`);
     },
 }
 
