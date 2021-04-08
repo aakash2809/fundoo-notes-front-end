@@ -15,7 +15,7 @@
                 solo
                 label="id"
                 v-model="editOptions._id"
-                v-show="true"
+                v-show="false"
               ></v-text-field>
               <v-text-field
                 class="title-field pt-8"
@@ -87,25 +87,9 @@
                 <span>More</span>
               </v-tooltip>
               <v-spacer></v-spacer>
-              <v-btn text v-on:click="close()"> close </v-btn>
+              <v-btn text v-on:click="updateNote()"> close </v-btn>
             </v-footer>
           </v-card>
-          <v-card
-            ><v-list shaped v-if="options" dense>
-              <v-list-item-group v-model="selectedItem">
-                <v-list-item
-                  v-for="item in items"
-                  :key="item.title"
-                  link
-                  @click="selectFucntion(item.title)"
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list></v-card
-          >
         </v-flex>
       </v-dialog>
     </v-layout>
@@ -125,26 +109,11 @@ export default {
       active: false,
       selectedItem: 0,
       options: false,
-      items: [{ title: "UpDate Note" }, { title: "Delete Note" }],
       editOptions: [],
     };
   },
 
   methods: {
-    selectFucntion(action) {
-      //  let input = { action: action, id: id };
-      console.log();
-      if (action == "Delete Note") {
-        this.deleteNote();
-        // EventBus.$emit("deleteNote", action);
-      }
-      if (action == "UpDate Note") {
-        //EventBus.$emit("updateNote", action);
-        console.log("action:", action);
-        this.updateNote();
-      }
-    },
-
     close() {
       this.active = false;
     },
@@ -155,33 +124,15 @@ export default {
 
     getAllNotes() {
       this.sending = true;
-      console.log(" Users Notes: ");
       userServices
         .fetchAllNotes()
         .then((res) => {
-          console.log("response : ", res.data);
           this.noteData = res.data.data.filter(
             (note) => note.isDeleted == false && note.isArchived == false
           );
-          console.log("node", this.noteData);
           EventBus.$emit("allNotes", this.noteData.reverse());
         })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    deleteNote() {
-      let noteId = this.editOptions._id;
-      userServices
-        .removeNote(noteId)
-        .then((res) => {
-          console.log("delete response : ", res);
-          this.getAllNotes();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch(() => {});
     },
 
     updateNote() {
@@ -190,21 +141,21 @@ export default {
         title: this.editOptions.title,
         description: this.editOptions.description,
       };
-      console.log("update htt called", data);
       userServices
         .editNoteData(noteId, data)
-        .then((res) => {
-          console.log("update response:", res);
+        .then(() => {
           this.getAllNotes();
+          this.close();
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          this.close();
         });
     },
   },
 
   mounted() {
     EventBus.$on("displayDialogNote", this.displayDialogNote);
+    this.editOptions = this.data;
   },
 };
 </script>
