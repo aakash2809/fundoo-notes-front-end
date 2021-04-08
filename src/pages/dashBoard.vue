@@ -39,7 +39,7 @@
                     @click.stop="item.active = true"
                     v-model="item.title"
                     v-on:click="openDialog()"
-                    >{{ item.title }}
+                  >
                   </v-text-field>
                   <v-spacer></v-spacer>
                   <v-tooltip bottom>
