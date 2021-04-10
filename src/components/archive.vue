@@ -13,11 +13,6 @@
             outlined
             :class="{ 'on-hover': hover }"
           >
-            <article class="text-md-right text-lg-right pt-5 pr-4">
-              <v-icon v-bind="attrs" v-on="on" v-show="hover"
-                >mdi-pin-outline</v-icon
-              >
-            </article>
             <v-card-title>{{ note.title }} </v-card-title>
             <v-list-item>{{ note.description }}</v-list-item>
             <v-tooltip bottom>
