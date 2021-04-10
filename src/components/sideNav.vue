@@ -18,14 +18,15 @@
           v-for="item in items"
           :key="item.title"
           link
-          id="side-nav-option"
           @click="selectFucntion(item.title)"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title id="side-nav-option">{{
+              item.title
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
