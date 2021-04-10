@@ -49,17 +49,19 @@
           </v-card>
         </v-hover>
       </v-flex>
-      <snackbar ref="snackbar" />
+      <SnackBar ref="snackbar" />
     </v-layout>
   </v-flex>
 </template>
 
 <script>
 import note from "../services/user";
-
+import SnackBar from "../services/user";
 export default {
   name: "Trash",
-  components: {},
+  components: {
+    SnackBar,
+  },
   data: () => ({
     trashNotes: [],
     allNotesForTrash: "",
@@ -94,8 +96,8 @@ export default {
         .then((data) => {
           console.log("response", data);
           if (data.data.status_code == 200) {
-            console.log(data.data);
-            console.log(this.snackbarData);
+            console.log("data sharing", this.$refs);
+            //console.log(this.snackbarData);
             this.displayAllNotes();
           }
         })
