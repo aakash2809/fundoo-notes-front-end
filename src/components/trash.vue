@@ -56,7 +56,7 @@
 
 <script>
 import note from "../services/user";
-import SnackBar from "../services/user";
+import SnackBar from "../components/snackBarNotify";
 export default {
   name: "Trash",
   components: {
@@ -74,6 +74,11 @@ export default {
   },
 
   methods: {
+    showSnackbarandRefresh() {
+      this.$refs.snackbar._data.show = true;
+      this.displayAllNotes();
+    },
+
     displayAllNotes() {
       console.log("inside trash display");
       note
@@ -93,15 +98,22 @@ export default {
     restoreNote(noteId) {
       note
         .restoreNote(noteId)
-        .then((data) => {
-          console.log("response", data);
-          if (data.data.status_code == 200) {
-            console.log("data sharing", this.$refs);
-            //console.log(this.snackbarData);
-            this.displayAllNotes();
+        .then((response) => {
+          console.log("response", response.data.message);
+
+          console.log("data sharing", this.$refs.snackbar._data.text);
+          if (response.data.status_code == 200) {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          } else {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
           }
         })
-        .catch(() => {});
+        .catch(() => {
+          this.$refs.snackbar._data.text = "internal server error";
+          this.showSnackbarandRefresh();
+        });
     },
 
     deleteForever(noteId) {
@@ -110,6 +122,7 @@ export default {
         .deleteNoteForever(noteId)
         .then((response) => {
           console.log("response", response);
+
           this.displayAllNotes();
         })
         .catch(() => {});
