@@ -20,16 +20,8 @@
           class="notesContainer"
         >
           <v-layout row wrap>
-            <v-flex
-              d-flex
-              xs12
-              sm6
-              md4
-              v-for="item in noteData"
-              v-bind:key="item._id"
-              link
-            >
-              <v-card class="pt-8">
+            <v-flex xs12 sm6 md4 v-for="item in noteData" v-bind:key="item._id">
+              <v-card class="mx-auto card-container pt-6 pb-8">
                 <v-toolbar flat>
                   <v-text-field
                     class="mx-auto v-list pt-8"
@@ -41,15 +33,6 @@
                     v-on:click="openDialog()"
                   >
                   </v-text-field>
-                  <v-spacer></v-spacer>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on">
-                        <v-icon>mdi-pin-outline</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>pin note</span>
-                  </v-tooltip>
                 </v-toolbar>
                 <v-text-field
                   class="pl-4"
@@ -147,6 +130,7 @@
           <Archive />
         </v-container>
       </v-col>
+      <SnackBar ref="snackbar" />
     </v-row>
   </div>
 </template>
@@ -160,6 +144,8 @@ import PopUp from "../components/dialogBox";
 import Trash from "../components/trash.vue";
 import Archive from "../components/archive.vue";
 import userServices from "../services/user";
+import SnackBar from "../components/snackBarNotify";
+
 export default {
   name: "dashBoard",
 
@@ -182,6 +168,7 @@ export default {
     PopUp,
     Trash,
     Archive,
+    SnackBar,
   },
 
   methods: {
@@ -191,26 +178,45 @@ export default {
       }
     },
 
+    showSnackbarandRefresh() {
+      this.$refs.snackbar._data.show = true;
+      this.getAllNotes();
+    },
+
     archiveNote(noteId) {
       console.log("ARCHIVE", noteId);
       userServices
         .archiveNoteData(noteId)
-        .then(() => {
-          this.getAllNotes();
+        .then((response) => {
+          if (response.data.status_code == 200) {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          } else {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          }
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          this.$refs.snackbar._data.text = "internal server error";
+          this.showSnackbarandRefresh();
         });
     },
 
     deleteNote(noteId) {
       userServices
         .removeNote(noteId)
-        .then(() => {
-          this.getAllNotes();
+        .then((response) => {
+          if (response.data.status_code == 200) {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          } else {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          }
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          this.$refs.snackbar._data.text = "internal server error";
+          this.showSnackbarandRefresh();
         });
     },
 
