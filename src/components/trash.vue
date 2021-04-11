@@ -121,11 +121,18 @@ export default {
       note
         .deleteNoteForever(noteId)
         .then((response) => {
-          console.log("response", response);
-
-          this.displayAllNotes();
+          if (response.data.status_code == 200) {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          } else {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          }
         })
-        .catch(() => {});
+        .catch(() => {
+          this.$refs.snackbar._data.text = "internal server error";
+          this.showSnackbarandRefresh();
+        });
     },
   },
 };
