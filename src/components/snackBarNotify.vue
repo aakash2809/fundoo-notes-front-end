@@ -18,22 +18,5 @@ export default {
       timeout: 0,
     };
   },
-
-  methods: {
-    reset() {
-      return {
-        show: false,
-        text: "",
-        timeout: 0,
-      };
-    },
-  },
-  /* mounted() {
-    
-      this.text = state.snackBar.text;
-        this.timeout = state.snackBar.timeout;
-        this.show = true;
-        this.reset();
-  }, */
 };
 </script>
