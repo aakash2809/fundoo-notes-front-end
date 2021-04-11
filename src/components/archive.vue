@@ -31,13 +31,14 @@
           </v-card>
         </v-hover>
       </v-flex>
+      <SnackBar ref="snackbar" />
     </v-layout>
   </v-flex>
 </template>
 
 <script>
 import userServices from "../services/user";
-
+import SnackBar from "../components/snackBarNotify";
 export default {
   name: "Archieved",
 
@@ -47,12 +48,19 @@ export default {
     result: "",
     dialog: false,
   }),
-
+  components: {
+    SnackBar,
+  },
   mounted() {
     this.displayAllNotes();
   },
 
   methods: {
+    showSnackbarandRefresh() {
+      this.$refs.snackbar._data.show = true;
+      this.displayAllNotes();
+    },
+
     displayAllNotes() {
       return userServices
         .fetchAllNotes()
@@ -61,7 +69,7 @@ export default {
           console.log("data.data", this.result);
           this.allNotes = [...this.result].reverse();
           console.log(
-            "extration",
+            "extraction",
             this.allNotes.find((note) => note.isArchived === true)
           );
           this.archievedNotes = this.allNotes.filter(
@@ -75,9 +83,21 @@ export default {
 
     unArchieve(noteId) {
       console.log("unarcheved id", noteId);
-      userServices.unArchieveNote(noteId).then(() => {
-        this.displayAllNotes();
-      });
+      userServices
+        .unArchieveNote(noteId)
+        .then((response) => {
+          if (response.data.status_code == 200) {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          } else {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          }
+        })
+        .catch(() => {
+          this.$refs.snackbar._data.text = "internal server error";
+          this.showSnackbarandRefresh();
+        });
     },
   },
 };
