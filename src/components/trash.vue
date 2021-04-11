@@ -80,28 +80,24 @@ export default {
     },
 
     displayAllNotes() {
-      console.log("inside trash display");
       note
         .fetchAllNotes()
         .then((result) => {
-          console.log("result", result);
           this.result = result.data.data;
           this.allNotes = [...this.result].reverse();
           this.trashNotes = this.allNotes.filter(
             (note) => note.isDeleted == true
           );
-          console.log("trashresult", this.trashNotes);
         })
-        .catch(() => {});
+        .catch(() => {
+          console.log("got error");
+        });
     },
 
     restoreNote(noteId) {
       note
         .restoreNote(noteId)
         .then((response) => {
-          console.log("response", response.data.message);
-
-          console.log("data sharing", this.$refs.snackbar._data.text);
           if (response.data.status_code == 200) {
             this.$refs.snackbar._data.text = response.data.message;
             this.showSnackbarandRefresh();
