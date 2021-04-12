@@ -7,6 +7,7 @@
       <v-col cols="3">
         <div class="side-nav pt-1">
           <SideNav />
+          <router-view></router-view>
         </div>
       </v-col>
       <v-col cols="9">
@@ -30,7 +31,7 @@
                     readonly
                     @click.stop="item.active = true"
                     v-model="item.title"
-                    v-on:click="openDialog()"
+                    v-on:click="openDialog($event)"
                   >
                   </v-text-field>
                 </v-toolbar>
@@ -41,7 +42,7 @@
                   readonly
                   @click.stop="item.active = true"
                   v-model="item.description"
-                  v-on:click="openDialog()"
+                  v-on:click="openDialog($event)"
                 ></v-text-field>
                 <v-footer flat color="white">
                   <v-tooltip bottom>
@@ -103,7 +104,6 @@
                       <v-list-item
                         v-for="option in items"
                         :key="option.title"
-                        link
                         @click="selectFucntion(option.title, item._id)"
                       >
                         <v-list-item-content>
@@ -120,9 +120,11 @@
             </v-flex>
           </v-layout>
         </v-container>
+
         <v-container grid-list-md v-if="isActivate && sideNavAction == 'Trash'">
           <Trash />
         </v-container>
+
         <v-container
           grid-list-md
           v-if="isActivate && sideNavAction == 'Archive'"
@@ -252,8 +254,10 @@ export default {
       this.isActivate = true;
     },
 
-    openDialog() {
+    openDialog(event) {
+      console.log("event", event.target);
       this.active = true;
+
       EventBus.$emit("displayDialogNote", this.active);
     },
   },

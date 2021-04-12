@@ -9,7 +9,6 @@ import Header from '@/components/header';
 import DashBoard from '@/pages/dashBoard';
 import SideNav from '@/components/sideNav';
 import Note from '@/components/note';
-import Trash from '@/components/trash';
 import PageNotFound from '@/components/pageNotFound.vue';
 
 Vue.use(Router);
@@ -50,22 +49,15 @@ export default new Router({
 					component: Header
 				},
 				{
-					path: 'sideNav',
+					path: '/dashBoard/:id',
 					component: SideNav
 				},
-
-				{
-					path: 'trash',
-					component: Trash
-				},
-
 				{
 					path: 'note',
 					component: Note
 				}
 			]
 		},
-
 		{ path: "*", component: PageNotFound }
 	],
 	mode: 'history'
