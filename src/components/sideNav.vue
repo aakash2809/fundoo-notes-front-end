@@ -23,11 +23,14 @@
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
-          <router-link :to="`/dashboard/${item.title}`">
+          <router-link
+            style="text-decoration: none; color: inherit"
+            :to="`/dashboard/${item.title}`"
+          >
             <v-list-item-content>
-              <v-list-item-title id="side-nav-option">{{
-                item.title
-              }}</v-list-item-title>
+              <v-list-item-title>
+                {{ item.title }}
+              </v-list-item-title>
             </v-list-item-content>
           </router-link>
         </v-list-item>
