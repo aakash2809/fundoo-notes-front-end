@@ -2,7 +2,7 @@
   <div>
     <div>
       <v-card
-        class="my-6 note-card"
+        class="my-3 note-card"
         id="noteCard"
         elevation="9"
         v-click-outside="collapseCard"
@@ -140,7 +140,6 @@ export default {
     noteTitle: "",
     description: "",
     noteData: [],
-
     active: false,
   }),
 
@@ -238,8 +237,6 @@ export default {
     EventBus.$on("sideNavActionForNotes", this.getAllNotes);
     EventBus.$on("sideNavActionForTrash", this.getTrashData);
     EventBus.$on("sideNavActionForArchive", this.archiveData);
-    //EventBus.$on("deleteNote", this.deleteNote);
-    //EventBus.$on("updateNote", this.updateNote);
   },
 };
 </script>

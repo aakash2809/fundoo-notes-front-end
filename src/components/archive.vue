@@ -37,8 +37,9 @@
 </template>
 
 <script>
-import userServices from "../services/user";
+//import userServices from "../services/user";
 import SnackBar from "../components/snackBarNotify";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Archieved",
 
@@ -51,7 +52,18 @@ export default {
   components: {
     SnackBar,
   },
-  mounted() {
+
+  created() {
+    this.getAllNotes();
+  },
+  computed: {
+    ...mapGetters(["allArchivedNotes"]),
+  },
+  methods: {
+    ...mapActions(["getAllNotes"]),
+  },
+
+  /* mounted() {
     this.displayAllNotes();
   },
 
@@ -99,6 +111,6 @@ export default {
           this.showSnackbarandRefresh();
         });
     },
-  },
+  }, */
 };
 </script>
