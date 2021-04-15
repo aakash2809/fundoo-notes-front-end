@@ -154,9 +154,10 @@ export default {
   computed: {
     ...mapGetters(["allActiveNotes"]),
   },
-};
+
  */
   methods: {
+    // ...mapActions(["getAllNotes"]),
     //collapseCard
     collapseCard() {
       this.active = false;
@@ -233,6 +234,13 @@ export default {
     },
   },
 
+  /*  created() {
+    this.getAllNotes();
+  },
+
+  computed: {
+    ...mapGetters(["allActiveNotes"]),
+  }, */
   mounted() {
     EventBus.$on("sideNavActionForNotes", this.getAllNotes);
     EventBus.$on("sideNavActionForTrash", this.getTrashData);
