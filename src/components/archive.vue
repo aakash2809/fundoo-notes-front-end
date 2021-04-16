@@ -2,7 +2,7 @@
   <v-flex>
     <v-layout class="noteCards" row wrap>
       <v-flex
-        v-for="note in archievedNotes"
+        v-for="note in allArchivedNotes"
         v-bind:key="note._id"
         md3
         class="mr-5 mb-5"
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-//import userServices from "../services/user";
+import userServices from "../services/user";
 import SnackBar from "../components/snackBarNotify";
 import { mapGetters, mapActions } from "vuex";
 export default {
@@ -61,9 +61,35 @@ export default {
   },
   methods: {
     ...mapActions(["getAllNotes"]),
+
+    showSnackbarandRefresh() {
+      this.$refs.snackbar._data.show = true;
+      //mapActions(["allArchivedNotes"]);
+      this.getAllNotes();
+    },
+
+    unArchieve(noteId) {
+      console.log("unarcheved id", noteId);
+      userServices
+        .unArchieveNote(noteId)
+        .then((response) => {
+          if (response.data.status_code == 200) {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          } else {
+            this.$refs.snackbar._data.text = response.data.message;
+            this.showSnackbarandRefresh();
+          }
+        })
+        .catch((error) => {
+          console.log("error:", error);
+          this.$refs.snackbar._data.text = "internal server error";
+          this.showSnackbarandRefresh();
+        });
+    },
   },
 
-  /* mounted() {
+  /*   mounted() {
     this.displayAllNotes();
   },
 
@@ -91,8 +117,8 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-
+    },*/
+  /* 
     unArchieve(noteId) {
       console.log("unarcheved id", noteId);
       userServices
