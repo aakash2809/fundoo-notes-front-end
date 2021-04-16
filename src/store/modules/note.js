@@ -2,13 +2,13 @@ import userServices from '../../services/user';
 
 const state = {
     notes: [],
-    navBarOption: Boolean
+    //navBarOption: Boolean
 };
 const getters = {
-    allActiveNotes: state => {
-        return state.notes.filter(note =>
-            (note.isDeleted == false && note.isArchived == false));
-    },
+    /*  allActiveNotes: state => {
+         return state.notes.filter(note =>
+             (note.isDeleted == false && note.isArchived == false));
+     }, */
 
     allArchivedNotes: state => {
         return state.notes.filter(note =>
@@ -23,45 +23,24 @@ const getters = {
 
 const actions = {
 
-    changeAddNote({ commit }) {
+    /* changeAddNote({ commit }) {
         this.navBarOption = false
         commit("changeAddNote", this.navBarOption)
-    },
+    }, */
 
-    /*  getAllNotes({ commit }) {
- 
-         note
-             .getNotes()
-             .then(result => {
-                 this.result = result.data.data;
-                 commit('setAllNotes', this.result);
-             }).catch(() => {
-                 // commit('SHOW_MESSAGE', {
-                 //     text: 'Error while Retriving Notes',
-                 //     timeout: 2000
-                 // });
-             });
-     }, */
-
-    getAllNotes() {
+    getAllNotes({ commit }) {
         userServices
             .fetchAllNotes()
-            .then(() => {
-                /*  console.log("response : ", res.data);
-                 this.noteData = res.data.data.filter(
-                   (note) => note.isDeleted == false && note.isArchived == false
-                 );
-                 console.log("node", this.noteData);
-                 EventBus.$emit("allNotes", this.noteData.reverse()); */
-                /*   this.result = result.data.data;
-                  commit('setAllNotes', this.result); */
+            .then((result) => {
+                console.log("response : ", result.data);
+                commit('setAllNotes', result.data.data);
             })
             .catch((error) => {
                 console.log(error);
             });
     },
 
-    addNote({ commit }, noteData) {
+    /* addNote({ commit }, noteData) {
         userServices.createNote(noteData).then(result => {
             this.result = result.data.data;
             commit('SHOW_MESSAGE', {
@@ -76,8 +55,8 @@ const actions = {
             });
         });
     },
-
-    trashNote({ commit }, id) {
+ */
+    /* trashNote({ commit }, id) {
         const noteInput = {
             isDeleted: true
         };
@@ -96,7 +75,7 @@ const actions = {
                 timeout: 2000
             });
         });
-    }
+    } */
 };
 
 const mutations = {

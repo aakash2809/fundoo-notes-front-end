@@ -2,7 +2,7 @@
   <v-flex>
     <v-layout class="noteCards" row wrap>
       <v-flex
-        v-for="note in trashNotes"
+        v-for="note in allTrashNotes"
         v-bind:key="note._id"
         md3
         class="mr-5 mb-10"
@@ -57,6 +57,7 @@
 <script>
 import note from "../services/user";
 import SnackBar from "../components/snackBarNotify";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Trash",
   components: {
@@ -69,17 +70,32 @@ export default {
     dialog: false,
   }),
 
+  created() {
+    this.getAllNotes();
+  },
+  computed: {
+    ...mapGetters(["allTrashNotes"]),
+  },
+  /* methods: {
+    ...mapActions(["getAllNotes"]),
+
+    showSnackbarandRefresh() {
+      this.$refs.snackbar._data.show = true;
+      this.getAllNotes();
+    }, */
+
   mounted() {
     this.displayAllNotes();
   },
 
   methods: {
+    ...mapActions(["getAllNotes"]),
     showSnackbarandRefresh() {
       this.$refs.snackbar._data.show = true;
-      this.displayAllNotes();
+      this.getAllNotes();
     },
 
-    displayAllNotes() {
+    /*   displayAllNotes() {
       note
         .fetchAllNotes()
         .then((result) => {
@@ -93,7 +109,7 @@ export default {
           console.log("got error");
         });
     },
-
+ */
     restoreNote(noteId) {
       note
         .restoreNote(noteId)
