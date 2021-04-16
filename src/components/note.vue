@@ -132,20 +132,16 @@
 
 <script>
 import userServices from "../services/user";
-import { EventBus } from "@/event-bus";
-//import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Note",
   data: () => ({
     noteTitle: "",
     description: "",
-    noteData: [],
+
     active: false,
   }),
-
-  /* methods: {
-    ...mapActions(["getAllNotes"]),
-  },
 
   created() {
     this.getAllNotes();
@@ -155,10 +151,9 @@ export default {
     ...mapGetters(["allActiveNotes"]),
   },
 
- */
   methods: {
-    // ...mapActions(["getAllNotes"]),
-    //collapseCard
+    ...mapActions(["getAllNotes"]),
+
     collapseCard() {
       this.active = false;
     },
@@ -203,51 +198,6 @@ export default {
           this.collapseCard();
         });
     },
-
-    //Get all notes from backend
-    getAllNotes() {
-      this.sending = true;
-      console.log(" Users Notes: ");
-      userServices
-        .fetchAllNotes()
-        .then((res) => {
-          console.log("response : ", res.data);
-          this.noteData = res.data.data.filter(
-            (note) => note.isDeleted == false && note.isArchived == false
-          );
-          console.log("node", this.noteData);
-          EventBus.$emit("allNotes", this.noteData.reverse());
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    getTrashData() {
-      console.log("trash page");
-      EventBus.$emit("allTrashData", "Trash page");
-    },
-
-    archiveData() {
-      console.log("Archive");
-      EventBus.$emit("archiveData", "Archive page navigation");
-    },
-  },
-
-  /*  created() {
-    this.getAllNotes();
-  },
-
-  computed: {
-    ...mapGetters(["allActiveNotes"]),
-  }, */
-  mounted() {
-    EventBus.$on("sideNavActionForNotes", this.getAllNotes);
-    EventBus.$on("sideNavActionForTrash", this.getTrashData);
-    EventBus.$on("sideNavActionForArchive", this.archiveData);
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>
