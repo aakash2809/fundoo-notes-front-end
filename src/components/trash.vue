@@ -64,8 +64,6 @@ export default {
     SnackBar,
   },
   data: () => ({
-    trashNotes: [],
-    allNotesForTrash: "",
     trash: true,
     dialog: false,
   }),
@@ -76,13 +74,6 @@ export default {
   computed: {
     ...mapGetters(["allTrashNotes"]),
   },
-  /* methods: {
-    ...mapActions(["getAllNotes"]),
-
-    showSnackbarandRefresh() {
-      this.$refs.snackbar._data.show = true;
-      this.getAllNotes();
-    }, */
 
   mounted() {
     this.displayAllNotes();
@@ -95,21 +86,6 @@ export default {
       this.getAllNotes();
     },
 
-    /*   displayAllNotes() {
-      note
-        .fetchAllNotes()
-        .then((result) => {
-          this.result = result.data.data;
-          this.allNotes = [...this.result].reverse();
-          this.trashNotes = this.allNotes.filter(
-            (note) => note.isDeleted == true
-          );
-        })
-        .catch(() => {
-          console.log("got error");
-        });
-    },
- */
     restoreNote(noteId) {
       note
         .restoreNote(noteId)
