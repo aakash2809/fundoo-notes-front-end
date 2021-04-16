@@ -5,10 +5,10 @@ const state = {
     //navBarOption: Boolean
 };
 const getters = {
-    /*  allActiveNotes: state => {
-         return state.notes.filter(note =>
-             (note.isDeleted == false && note.isArchived == false));
-     }, */
+    allActiveNotes: state => {
+        return state.notes.filter(note =>
+            (note.isDeleted == false && note.isArchived == false));
+    },
 
     allArchivedNotes: state => {
         return state.notes.filter(note =>

@@ -21,8 +21,17 @@
           class="notesContainer"
         >
           <v-layout row wrap>
-            <v-flex xs12 sm6 md4 v-for="item in noteData" v-bind:key="item._id">
-              <v-card class="mx-auto card-container pt-6 pb-8">
+            <v-flex
+              xs12
+              sm6
+              md4
+              v-for="item in allActiveNotes"
+              v-bind:key="item._id"
+            >
+              <v-card
+                class="mx-auto card-container pt-6 pb-8"
+                style="padding-bottom: 1px"
+              >
                 <v-toolbar flat>
                   <v-text-field
                     class="mx-auto v-list pt-8"
@@ -31,7 +40,7 @@
                     readonly
                     @click.stop="item.active = true"
                     v-model="item.title"
-                    v-on:click="openDialog($event)"
+                    v-on:click="openDialog(item.index)"
                   >
                   </v-text-field>
                 </v-toolbar>
@@ -99,7 +108,7 @@
                   </v-tooltip>
                 </v-footer>
                 <v-card
-                  ><v-list shaped v-if="options" dense>
+                  ><v-list shaped v-if="options" dense class="pb-2">
                     <v-list-item-group v-model="selectedItem">
                       <v-list-item
                         v-for="option in items"
@@ -147,13 +156,14 @@ import Trash from "../components/trash.vue";
 import Archive from "../components/archive.vue";
 import userServices from "../services/user";
 import SnackBar from "../components/snackBarNotify";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "dashBoard",
 
   data() {
     return {
-      noteData: [],
+      // noteData: [],
       isActivate: false,
       active: false,
       sideNavAction: "",
@@ -173,7 +183,16 @@ export default {
     SnackBar,
   },
 
+  created() {
+    this.getAllNotes();
+  },
+  computed: {
+    ...mapGetters(["allActiveNotes"]),
+  },
+
   methods: {
+    ...mapActions(["getAllNotes"]),
+
     selectFucntion(action, id) {
       if (action == "Delete Note") {
         this.deleteNote(id);
@@ -222,7 +241,7 @@ export default {
         });
     },
 
-    getAllNotes() {
+    /*  getAllNotes() {
       this.sending = true;
       console.log(" Users Notes: ");
       userServices
@@ -235,10 +254,10 @@ export default {
         })
         .catch(() => {});
     },
-
-    allNotes(notes) {
+ */
+    allNotes() {
       (this.showNoteCard = true), (this.sideNavAction = "Notes");
-      this.noteData = notes;
+      // this.noteData = notes;
       this.isActivate = true;
     },
 
@@ -254,8 +273,8 @@ export default {
       this.isActivate = true;
     },
 
-    openDialog(event) {
-      console.log("event", event.target);
+    openDialog(index) {
+      console.log("index", index);
       this.active = true;
 
       EventBus.$emit("displayDialogNote", this.active);
