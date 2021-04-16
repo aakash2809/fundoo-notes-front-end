@@ -58,11 +58,14 @@
 import note from "../services/user";
 import SnackBar from "../components/snackBarNotify";
 import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Trash",
+
   components: {
     SnackBar,
   },
+
   data: () => ({
     trash: true,
     dialog: false,
@@ -71,6 +74,7 @@ export default {
   created() {
     this.getAllNotes();
   },
+
   computed: {
     ...mapGetters(["allTrashNotes"]),
   },
@@ -81,6 +85,7 @@ export default {
 
   methods: {
     ...mapActions(["getAllNotes"]),
+
     showSnackbarandRefresh() {
       this.$refs.snackbar._data.show = true;
       this.getAllNotes();
@@ -125,6 +130,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

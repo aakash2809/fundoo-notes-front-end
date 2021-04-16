@@ -163,7 +163,6 @@ export default {
 
   data() {
     return {
-      // noteData: [],
       isActivate: false,
       active: false,
       sideNavAction: "",
@@ -241,23 +240,8 @@ export default {
         });
     },
 
-    /*  getAllNotes() {
-      this.sending = true;
-      console.log(" Users Notes: ");
-      userServices
-        .fetchAllNotes()
-        .then((res) => {
-          this.noteData = res.data.data.filter(
-            (note) => note.isDeleted == false && note.isArchived == false
-          );
-          EventBus.$emit("allNotes", this.noteData.reverse());
-        })
-        .catch(() => {});
-    },
- */
     allNotes() {
       (this.showNoteCard = true), (this.sideNavAction = "Notes");
-      // this.noteData = notes;
       this.isActivate = true;
     },
 
@@ -282,9 +266,13 @@ export default {
   },
 
   mounted() {
-    EventBus.$on("allNotes", this.allNotes);
+    /*   EventBus.$on("allNotes", this.allNotes);
     EventBus.$on("allTrashData", this.allTrashNotes);
-    EventBus.$on("archiveData", this.archiveNoteData);
+    EventBus.$on("archiveData", this.archiveNoteData); */
+
+    EventBus.$on("sideNavActionForNotes", this.allNotes);
+    EventBus.$on("sideNavActionForTrash", this.allTrashNotes);
+    EventBus.$on("sideNavActionForArchive", this.archiveNoteData);
   },
 };
 </script>
