@@ -1,3 +1,8 @@
+/*************************************************************************
+ * @file    : register.spec.js
+ * @purpose : to test register component
+ * @author  :  Aakash Rajak<aakashrajak2809@gmail.com>
+ **************************************************************************/
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import register from '../../src/pages/register';
 import Vuelidate from 'vuelidate';

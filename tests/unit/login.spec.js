@@ -1,3 +1,9 @@
+/*************************************************************************
+ * @file    : login.spec.js
+ * @purpose : to test login component
+ * @author  :  Aakash Rajak<aakashrajak2809@gmail.com>
+ **************************************************************************/
+
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import login from '../../src/pages/login';
 import Vuelidate from 'vuelidate';

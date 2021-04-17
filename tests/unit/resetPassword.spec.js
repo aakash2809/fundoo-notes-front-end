@@ -1,4 +1,9 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
+/*************************************************************************
+ * @file    : resetPassword.spec.js
+ * @purpose : to test resetPassword component
+ * @author  :  Aakash Rajak<aakashrajak2809@gmail.com>
+ **************************************************************************/
 import resetPassword from '../../src/pages/resetPassword'
 import Vuelidate from "vuelidate";
 

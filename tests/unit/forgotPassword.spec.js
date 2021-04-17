@@ -1,3 +1,9 @@
+/*************************************************************************
+ * @file    : forgotPassword.spec.js
+ * @purpose : to test forgotPassword component
+ * @author  :  Aakash Rajak<aakashrajak2809@gmail.com>
+ **************************************************************************/
+
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import forgotPassword from '../../src/pages/forgotPassword';
 import Vuelidate from 'vuelidate';

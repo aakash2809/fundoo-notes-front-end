@@ -1,10 +1,8 @@
 /*************************************************************************
- * @file : snackBar.spec.js
- * @purpose : to test snackBar component
- * @author :  Aakash Rajak<aakashrajak2809@gmail.com>
- * @since : 
+ * @file    : snackbar.spec.js
+ * @purpose : to test snackbar component
+ * @author  :  Aakash Rajak<aakashrajak2809@gmail.com>
  **************************************************************************/
-
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import Vuex from 'vuex'

@@ -1,7 +1,7 @@
 /*************************************************************************
- * @file : archive.spec.js
- * @author :  Aakash Rajak<aakashrajak2809@gmail.com>
- * @since : 
+ * @file  : archive.spec.js
+ * @purpose : to test archieve component
+ * @author:  Aakash Rajak<aakashrajak2809@gmail.com>
  **************************************************************************/
 
 import Archieved from '../../src/components/archive.vue';
