@@ -1,15 +1,17 @@
 
 import Vue from 'vue';
 import Router from 'vue-router';
-//import SignUp from '@/pages/register';
+import SignUp from '@/pages/register';
 import Login from '@/pages/login';
 import ForgotPassword from '@/pages/forgotPassword';
 import ResetPassword from '@/pages/resetPassword';
 import Header from '@/components/header';
 import DashBoard from '@/pages/dashBoard';
-import SideNav from '@/components/sideNav';
-//import Note from '@/components/note';
 import PageNotFound from '@/components/pageNotFound.vue';
+
+function lazyLoad(view) {
+	return () => import(`@/components/${view}.vue`)
+}
 
 Vue.use(Router);
 
@@ -18,10 +20,7 @@ export default new Router({
 
 		{
 			path: '/register',
-			//component: SignUp
-
-			component: () => import('@/pages/register'),
-			//name: SignUp,
+			component: SignUp
 		},
 		{
 			path: '/loginUser',
@@ -53,12 +52,13 @@ export default new Router({
 				},
 				{
 					path: '/dashBoard/:id',
-					component: SideNav
+					component: lazyLoad('sideNav')
+
 				},
 				{
 					path: 'note',
-					//component: Note
-					component: () => import('@/components/note'),
+					component: lazyLoad('note')
+
 				}
 			]
 		},
